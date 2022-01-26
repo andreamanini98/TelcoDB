@@ -13,9 +13,11 @@ public enum ServiceType {
         this.type = type;
     }
 
+
     public String getType() {
         return type;
     }
+
 
     public static ServiceType fromType(String type) {
         switch (type) {

@@ -11,6 +11,7 @@ public class ServiceTypeConverter implements AttributeConverter<ServiceType, Str
         return serviceType.getType();
     }
 
+
     @Override
     public ServiceType convertToEntityAttribute(String dbType) {
         return ServiceType.fromType(dbType);

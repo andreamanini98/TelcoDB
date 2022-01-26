@@ -17,7 +17,7 @@ public class User {
     private List<Alert> alerts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<UserOrder> orders;
+    private List<UserOrder> userOrders;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -34,53 +34,66 @@ public class User {
         return username;
     }
 
+
     public void setUsername(String username) {
         this.username = username;
     }
+
 
     public String getPassword() {
         return password;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getEmail() {
         return email;
     }
 
+
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public boolean isInsolvent() {
         return isInsolvent;
     }
 
+
     public void setInsolvent(boolean insolvent) {
         isInsolvent = insolvent;
     }
+
 
     public List<Alert> getAlerts() {
         return alerts;
     }
 
+
     public void setAlerts(List<Alert> alerts) {
         this.alerts = alerts;
     }
 
-    public List<UserOrder> getOrders() {
-        return orders;
+
+    public List<UserOrder> getUserOrders() {
+        return userOrders;
     }
 
-    public void setOrders(List<UserOrder> orders) {
-        this.orders = orders;
+
+    public void setUserOrders(List<UserOrder> orders) {
+        this.userOrders = orders;
     }
+
 
     public List<ServicePackage> getServicePackages() {
         return servicePackages;
     }
+
 
     public void setServicePackages(List<ServicePackage> servicePackages) {
         this.servicePackages = servicePackages;
