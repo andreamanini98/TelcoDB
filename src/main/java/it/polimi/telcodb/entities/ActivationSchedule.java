@@ -1,7 +1,7 @@
 package it.polimi.telcodb.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class ActivationSchedule {

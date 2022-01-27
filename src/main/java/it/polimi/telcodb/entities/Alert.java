@@ -2,8 +2,7 @@ package it.polimi.telcodb.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Time;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class Alert {
@@ -16,7 +15,7 @@ public class Alert {
     @Temporal(TemporalType.DATE)
     private Date dateOfRejection;
     @Temporal(TemporalType.TIME)
-    private Time hourOfRejection;
+    private Date hourOfRejection;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userUsernameFK")
@@ -66,12 +65,12 @@ public class Alert {
     }
 
 
-    public Time getHourOfRejection() {
+    public Date getHourOfRejection() {
         return hourOfRejection;
     }
 
 
-    public void setHourOfRejection(Time hourOfRejection) {
+    public void setHourOfRejection(Date hourOfRejection) {
         this.hourOfRejection = hourOfRejection;
     }
 

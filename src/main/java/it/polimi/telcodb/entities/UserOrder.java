@@ -2,8 +2,7 @@ package it.polimi.telcodb.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ public class UserOrder {
     @Temporal(TemporalType.DATE)
     private Date dateOfCreation;
     @Temporal(TemporalType.TIME)
-    private Time hourOfCreation;
+    private Date hourOfCreation;
     private BigDecimal totalValue;
     @Temporal(TemporalType.DATE)
     private Date startDateOfSubscription;
@@ -71,12 +70,12 @@ public class UserOrder {
     }
 
 
-    public Time getHourOfCreation() {
+    public Date getHourOfCreation() {
         return hourOfCreation;
     }
 
 
-    public void setHourOfCreation(Time hourOfCreation) {
+    public void setHourOfCreation(Date hourOfCreation) {
         this.hourOfCreation = hourOfCreation;
     }
 

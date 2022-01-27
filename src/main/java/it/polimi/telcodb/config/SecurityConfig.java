@@ -33,15 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers(
                         "/",
-                        "/loginReg",
-                        "/registerUser",
-                        "/login",
-                        "/registerAdmin",
-                        "/goToStorePage",
-                        "/saveStore",
-                        "/deleteStore"
+                        "/registerEmployee"
                 ).permitAll()
-                .antMatchers("/openAdminPage").hasAuthority("ADMIN")//new
+                .antMatchers("/openEmployeePage").hasAuthority("ADMIN")//new
                 .anyRequest().authenticated()
 
                 .and()
@@ -52,8 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/perform_logout"))
-                .logoutSuccessUrl("/logout-success").permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/performLogout"))
+                .logoutSuccessUrl("/logoutSuccess").permitAll()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true);
     }
