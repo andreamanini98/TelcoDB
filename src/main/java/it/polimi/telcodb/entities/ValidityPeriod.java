@@ -25,6 +25,11 @@ public class ValidityPeriod {
     public ValidityPeriod() {
     }
 
+    public ValidityPeriod(int numberOfMonths, BigDecimal monthlyFee) {
+        this.numberOfMonths = numberOfMonths;
+        this.monthlyFee = monthlyFee;
+    }
+
 
     public Long getId() {
         return id;

@@ -44,11 +44,13 @@ public class EmployeePageController {
         return "employeePage";
     }
 
+
     @PostMapping("/createMobilePhoneService")
     public String createMobilePhoneService(@RequestParam int nMinutes, @RequestParam int nSMSs, @RequestParam BigDecimal extraMinFee, @RequestParam BigDecimal extraGigaFee) {
         employeeService.saveMobilePhoneService(nMinutes, nSMSs, extraMinFee, extraGigaFee);
         return "employeePage";
     }
+
 
     @PostMapping("/createFixedInternetService")
     public String createFixedInternetService(@RequestParam int nGiga, @RequestParam BigDecimal extraGigaFee) {
@@ -56,9 +58,24 @@ public class EmployeePageController {
         return "employeePage";
     }
 
+
     @PostMapping("/createMobileInternetService")
     public String createMobileInternetService(@RequestParam int nGiga, @RequestParam BigDecimal extraGigaFee) {
         employeeService.saveFixedMobileInternetService(ServiceType.MOBILE_INTERNET, nGiga, extraGigaFee);
+        return "employeePage";
+    }
+
+
+    @PostMapping("/createValidityPeriod")
+    public String createValidityPeriod(@RequestParam int nMonths, @RequestParam BigDecimal monthlyFee) {
+        employeeService.saveValidityPeriod(nMonths, monthlyFee);
+        return "employeePage";
+    }
+
+
+    @PostMapping("/createOptionalProduct")
+    public String createOptionalProduct(@RequestParam String name, @RequestParam BigDecimal monthlyFee) {
+        employeeService.saveOptionalProduct(name, monthlyFee);
         return "employeePage";
     }
 

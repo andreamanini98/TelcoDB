@@ -1,7 +1,9 @@
 package it.polimi.telcodb.services;
 
 import it.polimi.telcodb.entities.Employee;
+import it.polimi.telcodb.entities.OptionalProduct;
 import it.polimi.telcodb.entities.TelcoService;
+import it.polimi.telcodb.entities.ValidityPeriod;
 import it.polimi.telcodb.enums.ServiceType;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ public class EmployeeService {
     @PersistenceContext
     EntityManager entityManager;
 
+
     @Transactional
     public void saveEmployee(String username, String password, String email) {
         Employee employee = new Employee();
@@ -25,12 +28,14 @@ public class EmployeeService {
         entityManager.persist(employee);
     }
 
+
     @Transactional
     public void saveFixedPhoneService() {
         TelcoService service = new TelcoService();
         service.setServiceType(ServiceType.FIXED_PHONE);
         entityManager.persist(service);
     }
+
 
     @Transactional
     public void saveMobilePhoneService(int nMinutes, int nSMSs, BigDecimal extraMinFee, BigDecimal extraGigaFee) {
@@ -43,6 +48,7 @@ public class EmployeeService {
         entityManager.persist(service);
     }
 
+
     @Transactional
     public void saveFixedMobileInternetService(ServiceType serviceType, int nGiga, BigDecimal extraGigaFee) {
         TelcoService service = new TelcoService();
@@ -52,6 +58,20 @@ public class EmployeeService {
         service.setNumberOfGigabytes(nGiga);
         service.setExtraGigabytesFee(extraGigaFee);
         entityManager.persist(service);
+    }
+
+
+    @Transactional
+    public void saveValidityPeriod(int nMonths, BigDecimal monthlyFee) {
+        ValidityPeriod validityPeriod = new ValidityPeriod(nMonths, monthlyFee);
+        entityManager.persist(validityPeriod);
+    }
+
+
+    @Transactional
+    public void saveOptionalProduct(String name, BigDecimal monthlyFee) {
+        OptionalProduct optionalProduct = new OptionalProduct(name, monthlyFee);
+        entityManager.persist(optionalProduct);
     }
 
 }
