@@ -2,6 +2,7 @@ package it.polimi.telcodb.controllers;
 
 import it.polimi.telcodb.enums.ServiceType;
 import it.polimi.telcodb.services.EmployeeService;
+import it.polimi.telcodb.services.UtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class EmployeePageController {
 
     @Autowired
     EmployeeService employeeService;
+
+    @Autowired
+    UtilsService utilsService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 

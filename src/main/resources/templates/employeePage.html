@@ -161,25 +161,37 @@
             </td>
             <td>
                 <p>Create a Mobile Phone Service</p>
-                <form action="#" th:action="@{/createMobilePhoneService}" method="post">
-                    <label>
-                        Number of minutes:<br>
-                        <input type="number" value="0" name="nMinutes">
-                    </label><br>
-                    <label>
-                        Number of SMSs:<br>
-                        <input type="number" value="0" name="nSMSs">
-                    </label><br>
-                    <label>
-                        Extra minutes fee:<br>
-                        <input type="number" step=".01" value="0.00" name="extraMinFee">
-                    </label><br>
-                    <label>
-                        Extra gigabytes fee:<br>
-                        <input type="number" step=".01" value="0.00" name="extraGigaFee">
-                    </label><br>
-                    <input type="submit" value="Create">
-                </form>
+                <form action="#" th:action="@{/createMobilePhoneService}" method="post" id="mps_form"></form>
+                <table>
+                    <tr>
+                        <td>
+                            <label>
+                                Number of minutes:<br>
+                                <input type="number" value="0" name="nMinutes" form="mps_form">
+                            </label></td>
+                        <td>
+                            <label>
+                                Number of SMSs:<br>
+                                <input type="number" value="0" name="nSMSs" form="mps_form">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>
+                                Extra minutes fee:<br>
+                                <input type="number" step=".01" value="0.00" name="extraMinFee" form="mps_form">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                Extra gigabytes fee:<br>
+                                <input type="number" step=".01" value="0.00" name="extraGigaFee" form="mps_form">
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" value="Create" form="mps_form">
             </td>
             <td>
                 <p>Create a Fixed Internet Service</p>
