@@ -16,29 +16,28 @@
             color: #ff0000;
         }
 
+        h3 {
+            text-align: center;
+            font-size: 30px;
+            font-family: 'Raleway', sans-serif;
+            color: #ff0000;
+        }
+
         p {
             text-align: center;
             font-size: 35px;
+            margin: 0;
             font-family: 'Dongle', sans-serif;
         }
 
-        input[type=text] {
+        input[type=number] {
             border: 2px solid #000000;
-            border-radius: 10px;
-            font-size: 20px;
-            width: 30%;
-            padding: 12px 20px;
+            border-radius: 15px;
+            font-size: 17px;
+            width: 120px;
+            padding: 5px;
             margin: 8px 0;
-            box-sizing: border-box;
-        }
-
-        input[type=password] {
-            border: 2px solid #000000;
-            border-radius: 10px;
-            font-size: 20px;
-            width: 30%;
-            padding: 12px 20px;
-            margin: 8px 0;
+            text-align: center;
             box-sizing: border-box;
         }
 
@@ -49,9 +48,9 @@
             border: none;
             color: #FFFFFF;
             text-align: center;
-            font-size: 20px;
-            padding: 20px;
-            width: 150px;
+            font-size: 17px;
+            padding: 5px;
+            width: 100px;
             transition: all 0.5s;
             cursor: pointer;
             margin: 5px;
@@ -75,6 +74,11 @@
 
         div {
             text-align: center;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
         }
     </style>
 
@@ -86,6 +90,72 @@
 <body>
 
 <h1>Employee Page</h1>
+
+<hr>
+
+<h3>Create a Service</h3>
+<div>
+    <table>
+        <tr>
+            <td>
+                <p>Create a Fixed Phone Service</p>
+                <form action="#" th:action="@{/createFixedPhoneService}" method="post">
+                    <input type="submit" value="Create">
+                </form>
+            </td>
+            <td>
+                <p>Create a Mobile Phone Service</p>
+                <form action="#" th:action="@{/createMobilePhoneService}" method="post">
+                    <label>
+                        Number of minutes:<br>
+                        <input type="number" value="0" name="nMinutes">
+                    </label><br>
+                    <label>
+                        Number of SMSs:<br>
+                        <input type="number" value="0" name="nSMSs">
+                    </label><br>
+                    <label>
+                        Extra minutes fee:<br>
+                        <input type="number" step=".01" value="0.00" name="extraMinFee">
+                    </label><br>
+                    <label>
+                        Extra gigabytes fee:<br>
+                        <input type="number" step=".01" value="0.00" name="extraGigaFee">
+                    </label><br>
+                    <input type="submit" value="Create">
+                </form>
+            </td>
+            <td>
+                <p>Create a Fixed Internet Service</p>
+                <form action="#" th:action="@{/createFixedInternetService}" method="post">
+                    <label>
+                        Number of gigabytes<br>
+                        <input type="number" value="0" name="nGiga">
+                    </label><br>
+                    <label>
+                        Extra gigabytes fee<br>
+                        <input type="number" step=".01" value="0.00" name="extraGigaFee">
+                    </label><br>
+                    <input type="submit" value="Create">
+                </form>
+            </td>
+            <td>
+                <p>Create a Mobile Internet Service</p>
+                <form action="#" th:action="@{/createMobileInternetService}" method="post">
+                    <label>
+                        Number of gigabytes<br>
+                        <input type="number" value="0" name="nGiga">
+                    </label><br>
+                    <label>
+                        Extra gigabytes fee<br>
+                        <input type="number" step=".01" value="0.00" name="extraGigaFee">
+                    </label><br>
+                    <input type="submit" value="Create">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <hr>
 

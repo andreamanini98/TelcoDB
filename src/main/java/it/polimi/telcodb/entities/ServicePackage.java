@@ -19,7 +19,7 @@ public class ServicePackage {
             name = "ServicePackageJTService",
             joinColumns = @JoinColumn(name = "servicePackageIdFK"),
             inverseJoinColumns = @JoinColumn(name = "serviceIdFK"))
-    private List<Service> services;
+    private List<TelcoService> services;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
@@ -72,12 +72,12 @@ public class ServicePackage {
     }
 
 
-    public List<Service> getServices() {
+    public List<TelcoService> getServices() {
         return services;
     }
 
 
-    public void setServices(List<Service> services) {
+    public void setServices(List<TelcoService> services) {
         this.services = services;
     }
 

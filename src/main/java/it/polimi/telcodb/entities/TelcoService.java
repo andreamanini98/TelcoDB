@@ -8,24 +8,25 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-public class Service {
+@Table(name = "Service")
+public class TelcoService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Convert(converter = ServiceTypeConverter.class)
     private ServiceType serviceType;
-    private int numberOfMinutes;
-    private int numberOfSMSs;
+    private Integer numberOfMinutes;
+    private Integer numberOfSMSs;
     private BigDecimal extraSMSsFee;
     private BigDecimal extraMinutesFee;
-    private int numberOfGigabytes;
+    private Integer numberOfGigabytes;
     private BigDecimal extraGigabytesFee;
 
     @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
     private List<ServicePackage> servicePackages;
 
-    public Service() {
+    public TelcoService() {
     }
 
 
