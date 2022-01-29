@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@NamedQuery(name = "ValidityPeriod.findAll", query = "SELECT v FROM ValidityPeriod v")
 public class ValidityPeriod {
 
     @Id

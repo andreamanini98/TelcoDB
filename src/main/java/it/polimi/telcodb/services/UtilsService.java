@@ -16,14 +16,12 @@ public class UtilsService {
 
 
     public List<OptionalProduct> findAllOptionalProducts() {
-        return null;
-        //return entityManager.createNamedQuery("OptionalProduct.findAll", OptionalProduct.class).getResultList();
+        return entityManager.createNamedQuery("OptionalProduct.findAll", OptionalProduct.class).getResultList();
     }
 
 
     public List<ValidityPeriod> findAllValidityPeriod() {
-        return null;
-        //return entityManager.createNamedQuery("ValidityPeriod.findAll", ValidityPeriod.class).getResultList();
+        return entityManager.createNamedQuery("ValidityPeriod.findAll", ValidityPeriod.class).getResultList();
     }
 
 }

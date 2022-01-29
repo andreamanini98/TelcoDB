@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@NamedQuery(name = "OptionalProduct.findAll", query = "SELECT o FROM OptionalProduct o")
 public class OptionalProduct {
 
     @Id
