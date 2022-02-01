@@ -38,4 +38,25 @@ public enum ServiceType {
         }
     }
 
+
+    @Override
+    public String toString() {
+        switch (type) {
+            case "FixedPhone":
+                return "Fixed Phone Service";
+
+            case "MobilePhone":
+                return "Mobile Phone Service";
+
+            case "FixedInternet":
+                return "Fixed Internet Service";
+
+            case "MobileInternet":
+                return "Mobile Internet Service";
+
+            default:
+                return "";
+        }
+    }
+
 }

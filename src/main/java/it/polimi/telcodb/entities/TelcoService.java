@@ -151,17 +151,15 @@ public class TelcoService {
     public String toString() {
         switch (this.serviceType) {
             case FIXED_PHONE:
-                return Long.toString(id) + " " + serviceType;
+                return serviceType + " - Id:" + Long.toString(id) + " ";
 
             case MOBILE_PHONE:
-                return Long.toString(id) + " " + serviceType + ": "
-                        + numberOfMinutes + " minutes - " + numberOfSMSs + " SMSs - "
-                        + extraMinutesFee + " €/extraMinute - " + extraGigabytesFee + " €/extraGigabyte";
+                return serviceType + ": " + numberOfMinutes + " minutes - " + numberOfSMSs + " SMSs - "
+                        + extraMinutesFee + " €/extraMinute - " + extraSMSsFee + " €/extraSMS";
 
             case FIXED_INTERNET:
             case MOBILE_INTERNET:
-                return Long.toString(id) + " " + serviceType + ": " + numberOfGigabytes
-                        + " gigabytes - " + extraGigabytesFee + " €/extraGigabyte";
+                return serviceType + ": " + numberOfGigabytes + " gigabytes - " + extraGigabytesFee + " €/extraGigabyte";
 
             default:
                 return "";
