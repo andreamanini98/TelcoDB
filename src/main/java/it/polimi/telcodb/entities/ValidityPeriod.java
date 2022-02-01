@@ -91,4 +91,10 @@ public class ValidityPeriod {
         this.userOrders = userOrders;
     }
 
+
+    @Override
+    public String toString() {
+        return numberOfMonths + " months - " + monthlyFee + "€/month";
+    }
+
 }

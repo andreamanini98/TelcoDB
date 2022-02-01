@@ -1,9 +1,6 @@
 package it.polimi.telcodb.services;
 
-import it.polimi.telcodb.entities.Employee;
-import it.polimi.telcodb.entities.OptionalProduct;
-import it.polimi.telcodb.entities.TelcoService;
-import it.polimi.telcodb.entities.ValidityPeriod;
+import it.polimi.telcodb.entities.*;
 import it.polimi.telcodb.enums.ServiceType;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EmployeeService {
@@ -32,31 +31,20 @@ public class EmployeeService {
     @Transactional
     public void saveFixedPhoneService() {
         TelcoService service = new TelcoService();
-        service.setServiceType(ServiceType.FIXED_PHONE);
         entityManager.persist(service);
     }
 
 
     @Transactional
     public void saveMobilePhoneService(int nMinutes, int nSMSs, BigDecimal extraMinFee, BigDecimal extraGigaFee) {
-        TelcoService service = new TelcoService();
-        service.setServiceType(ServiceType.MOBILE_PHONE);
-        service.setNumberOfMinutes(nMinutes);
-        service.setNumberOfSMSs(nSMSs);
-        service.setExtraMinutesFee(extraMinFee);
-        service.setExtraGigabytesFee(extraGigaFee);
+        TelcoService service = new TelcoService(nMinutes, nSMSs, extraMinFee, extraGigaFee);
         entityManager.persist(service);
     }
 
 
     @Transactional
     public void saveFixedMobileInternetService(ServiceType serviceType, int nGiga, BigDecimal extraGigaFee) {
-        TelcoService service = new TelcoService();
-        if (serviceType.equals(ServiceType.FIXED_INTERNET))
-            service.setServiceType(ServiceType.FIXED_INTERNET);
-        else service.setServiceType(ServiceType.MOBILE_INTERNET);
-        service.setNumberOfGigabytes(nGiga);
-        service.setExtraGigabytesFee(extraGigaFee);
+        TelcoService service = new TelcoService(serviceType, nGiga, extraGigaFee);
         entityManager.persist(service);
     }
 
@@ -72,6 +60,33 @@ public class EmployeeService {
     public void saveOptionalProduct(String name, BigDecimal monthlyFee) {
         OptionalProduct optionalProduct = new OptionalProduct(name, monthlyFee);
         entityManager.persist(optionalProduct);
+    }
+
+
+    @Transactional
+    public void saveServicePackage(String name, List<String> selectedOP, List<String> selectedVP, List<String> selectedS) {
+        ServicePackage servicePackage = new ServicePackage(name);
+
+        List<OptionalProduct> optionalProducts = new ArrayList<>();
+        List<ValidityPeriod> validityPeriods = new ArrayList<>();
+        List<TelcoService> services = new ArrayList<>();
+
+        if (selectedOP != null) {
+            for (String s : selectedOP)
+                optionalProducts.add(entityManager.find(OptionalProduct.class, Long.parseLong(s)));
+        }
+
+        for (String s : selectedVP)
+            validityPeriods.add(entityManager.find(ValidityPeriod.class, Long.parseLong(s)));
+
+        for (String s : selectedS)
+            services.add(entityManager.find(TelcoService.class, Long.parseLong(s)));
+
+        servicePackage.getOptionalProducts().addAll(optionalProducts);
+        servicePackage.getValidityPeriods().addAll(validityPeriods);
+        servicePackage.getServices().addAll(services);
+
+        entityManager.persist(servicePackage);
     }
 
 }

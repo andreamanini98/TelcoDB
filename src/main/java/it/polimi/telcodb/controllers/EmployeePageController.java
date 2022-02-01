@@ -2,7 +2,6 @@ package it.polimi.telcodb.controllers;
 
 import it.polimi.telcodb.enums.ServiceType;
 import it.polimi.telcodb.services.EmployeeService;
-import it.polimi.telcodb.services.UtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,9 +16,6 @@ public class EmployeePageController {
 
     @Autowired
     EmployeeService employeeService;
-
-    @Autowired
-    UtilsService utilsService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -50,8 +46,8 @@ public class EmployeePageController {
 
 
     @PostMapping("/createMobilePhoneService")
-    public String createMobilePhoneService(@RequestParam int nMinutes, @RequestParam int nSMSs, @RequestParam BigDecimal extraMinFee, @RequestParam BigDecimal extraGigaFee) {
-        employeeService.saveMobilePhoneService(nMinutes, nSMSs, extraMinFee, extraGigaFee);
+    public String createMobilePhoneService(@RequestParam int nMinutes, @RequestParam int nSMSs, @RequestParam BigDecimal extraMinFee, @RequestParam BigDecimal extraSMSFee) {
+        employeeService.saveMobilePhoneService(nMinutes, nSMSs, extraMinFee, extraSMSFee);
         return "employeePage";
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.telcodb.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,26 +20,30 @@ public class ServicePackage {
             name = "ServicePackageJTService",
             joinColumns = @JoinColumn(name = "servicePackageIdFK"),
             inverseJoinColumns = @JoinColumn(name = "serviceIdFK"))
-    private List<TelcoService> services;
+    private List<TelcoService> services = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "ServicePackageJTValidityPeriod",
             joinColumns = @JoinColumn(name = "servicePackageIdFK"),
             inverseJoinColumns = @JoinColumn(name = "validityPeriodIdFK"))
-    private List<ValidityPeriod> validityPeriods;
+    private List<ValidityPeriod> validityPeriods = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "ServicePackageJTOptionalProduct",
             joinColumns = @JoinColumn(name = "servicePackageIdFK"),
             inverseJoinColumns = @JoinColumn(name = "optionalProductIdFK"))
-    private List<OptionalProduct> optionalProducts;
+    private List<OptionalProduct> optionalProducts = new ArrayList<>();
 
     @OneToMany(mappedBy = "servicePackage", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UserOrder> userOrders;
 
     public ServicePackage() {
+    }
+
+    public ServicePackage(String name) {
+        this.name = name;
     }
 
 

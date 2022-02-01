@@ -35,7 +35,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/",
                         "/registerEmployee"
                 ).permitAll()
-                .antMatchers("/openEmployeePage").hasAuthority("ADMIN")//new
+                .antMatchers(
+                        "/openEmployeePage",
+                        "/createFixedPhoneService",
+                        "/createMobilePhoneService",
+                        "/createFixedInternetService",
+                        "/createMobileInternetService",
+                        "/createValidityPeriod",
+                        "/createOptionalProduct",
+                        "/createServicePackage",
+                        "/openCreateSPPage"
+                ).hasAuthority("ADMIN")
                 .anyRequest().authenticated()
 
                 .and()

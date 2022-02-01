@@ -92,4 +92,10 @@ public class OptionalProduct {
         this.userOrders = userOrders;
     }
 
+
+    @Override
+    public String toString() {
+        return name + " - " + monthlyFee + "€/month";
+    }
+
 }

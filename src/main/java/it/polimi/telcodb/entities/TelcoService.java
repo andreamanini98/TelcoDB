@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Service")
+@NamedQuery(name = "TelcoService.findByServiceType", query = "SELECT s FROM TelcoService s WHERE s.serviceType = ?1")
 public class TelcoService {
 
     @Id
@@ -27,6 +28,32 @@ public class TelcoService {
     private List<ServicePackage> servicePackages;
 
     public TelcoService() {
+        this.serviceType = ServiceType.FIXED_PHONE;
+    }
+
+    public TelcoService(int numberOfMinutes, int numberOfSMSs, BigDecimal extraMinutesFee, BigDecimal extraSMSFee) {
+        this.serviceType = ServiceType.MOBILE_PHONE;
+        this.numberOfMinutes = numberOfMinutes;
+        this.numberOfSMSs = numberOfSMSs;
+        this.extraMinutesFee = extraMinutesFee;
+        this.extraSMSsFee = extraSMSFee;
+    }
+
+    public TelcoService(ServiceType serviceType, int numberOfGigabytes, BigDecimal extraGigabytesFee) {
+        switch (serviceType) {
+            case FIXED_INTERNET:
+                this.serviceType = ServiceType.FIXED_INTERNET;
+                break;
+
+            case MOBILE_INTERNET:
+                this.serviceType = ServiceType.MOBILE_INTERNET;
+                break;
+
+            default:
+                this.serviceType = null;
+        }
+        this.numberOfGigabytes = numberOfGigabytes;
+        this.extraGigabytesFee = extraGigabytesFee;
     }
 
 
@@ -117,6 +144,28 @@ public class TelcoService {
 
     public void setServicePackages(List<ServicePackage> servicePackages) {
         this.servicePackages = servicePackages;
+    }
+
+
+    @Override
+    public String toString() {
+        switch (this.serviceType) {
+            case FIXED_PHONE:
+                return Long.toString(id) + " " + serviceType;
+
+            case MOBILE_PHONE:
+                return Long.toString(id) + " " + serviceType + ": "
+                        + numberOfMinutes + " minutes - " + numberOfSMSs + " SMSs - "
+                        + extraMinutesFee + " €/extraMinute - " + extraGigabytesFee + " €/extraGigabyte";
+
+            case FIXED_INTERNET:
+            case MOBILE_INTERNET:
+                return Long.toString(id) + " " + serviceType + ": " + numberOfGigabytes
+                        + " gigabytes - " + extraGigabytesFee + " €/extraGigabyte";
+
+            default:
+                return "";
+        }
     }
 
 }

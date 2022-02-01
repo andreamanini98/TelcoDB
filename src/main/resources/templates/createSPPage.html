@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+        h1 {
+            text-align: center;
+            font-size: 60px;
+            font-family: 'Raleway', sans-serif;
+            color: #ff0000;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 30px;
+            font-family: 'Raleway', sans-serif;
+            color: #ff0000;
+        }
+
+        p {
+            text-align: center;
+            font-size: 35px;
+            margin: 0;
+            font-family: 'Dongle', sans-serif;
+        }
+
+        .button {
+            display: inline-block;
+            border-radius: 15px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 20px;
+            padding: 10px;
+            width: 100px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        input[type=number] {
+            border: 2px solid #000000;
+            border-radius: 15px;
+            font-size: 17px;
+            width: 120px;
+            padding: 5px;
+            margin: 8px 0;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        input[type=text] {
+            border: 2px solid #000000;
+            border-radius: 15px;
+            font-size: 17px;
+            width: 240px;
+            padding: 5px;
+            margin: 8px 0;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            display: inline-block;
+            border-radius: 13px;
+            background-color: #1e9bf4;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 17px;
+            padding: 5px;
+            width: 100px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        input[type=submit]:hover {
+            background-color: #7be084;
+        }
+
+        input[type=text]:focus {
+            background-color: lightblue;
+        }
+
+        input[type=password]:focus {
+            background-color: rgba(195, 255, 255, 0.56);
+        }
+
+        input[type=text]:focus {
+            background-color: rgba(195, 255, 255, 0.56);
+        }
+
+        div {
+            height: 50px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        hr {
+            border: 5px solid #cdd7ff;
+            border-radius: 15px;
+        }
+
+        label {
+            font-size: 20px;
+            padding: 10px;
+            font-family: 'Dongle', sans-serif;
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <title>Create Service Package Page</title>
+</head>
+
+
+<body>
+
+<h1>Service Package creation page</h1>
+
+<form action="#" th:action="@{/createServicePackage}" method="post" id="SPForm">
+    <h3>Insert the Service Package name</h3>
+    <label for="sp_name"></label>
+    <input type="text" placeholder="Service Package Name" name="name" id="sp_name" form="SPForm">
+
+    <hr>
+
+    <h3>Optional Products</h3>
+    <div th:each="optionalProduct : ${optionalProductsList}">
+        <label for="op_L"></label>
+        <input type="checkbox" name="selectedOP" form="SPForm" id="op_L" th:value="${optionalProduct.getId()}"
+               th:text="${optionalProduct.toString()}"/>
+    </div>
+
+    <hr>
+
+    <h3>Validity Periods</h3>
+    <div th:each="validityPeriod : ${validityPeriodsList}">
+        <label for="vp_L"></label>
+        <input type="checkbox" name="selectedVP" form="SPForm" id="vp_L" th:value="${validityPeriod.getId()}"
+               th:text="${validityPeriod.toString()}"/>
+    </div>
+
+    <hr>
+
+    <h3>Services</h3>
+    <p>Fixed Phone Services</p>
+    <div th:each="fixedPhoneService : ${fixedPhoneServicesList}">
+        <label for="fp_L"></label>
+        <input type="radio" name="selectedFP" form="SPForm" id="fp_L" th:value="${fixedPhoneService.getId()}"
+               th:text="${fixedPhoneService.toString()}"/>
+    </div>
+    <hr>
+    <p>Mobile Phone Services</p>
+    <div th:each="mobilePhoneService : ${mobilePhoneServicesList}">
+        <label for="mp_L"></label>
+        <input type="radio" name="selectedMP" form="SPForm" id="mp_L" th:value="${mobilePhoneService.getId()}"
+               th:text="${mobilePhoneService.toString()}"/>
+    </div>
+    <hr>
+    <p>Fixed Internet Services</p>
+    <div th:each="fixedInternetService : ${fixedInternetServicesList}">
+        <label for="fi_L"></label>
+        <input type="radio" name="selectedFI" form="SPForm" id="fi_L" th:value="${fixedInternetService.getId()}"
+               th:text="${fixedInternetService.toString()}"/>
+    </div>
+    <hr>
+    <p>Mobile Internet Services</p>
+    <div th:each="mobileInternetService : ${mobileInternetServicesList}">
+        <label for="mi_L"></label>
+        <input type="radio" name="selectedMI" form="SPForm" id="mi_L" th:value="${mobileInternetService.getId()}"
+               th:text="${mobileInternetService.toString()}"/>
+    </div>
+
+    <hr>
+
+    <button type="submit" value="associate" form="SPForm">Save</button>
+</form>
+
+<hr>
+
+<p>Click here to return to the previous page</p>
+<p><a th:href="@{/openEmployeePage}">
+    <button class="button" style="vertical-align:middle"><span>Back</span></button>
+</a></p>
+
+</body>
+
+</html>
