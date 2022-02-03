@@ -2,7 +2,6 @@ package it.polimi.telcodb.controllers;
 
 import it.polimi.telcodb.enums.ServiceType;
 import it.polimi.telcodb.exceptions.AllServicesAreNullException;
-import it.polimi.telcodb.exceptions.ServicePackageNameIsEmptyException;
 import it.polimi.telcodb.services.EmployeeService;
 import it.polimi.telcodb.services.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +31,6 @@ public class CreateSPPageController {
     public ModelAndView openCreateSPPage() {
         ModelAndView modelAndView = new ModelAndView("createSPPage");
         addParametersToModelAndView(modelAndView);
-
         return modelAndView;
     }
 
@@ -50,8 +49,8 @@ public class CreateSPPageController {
         addParametersToModelAndView(modelAndView);
 
         try {
-            checkParametersValidity(name, selectedFP, selectedMP, selectedFI, selectedMI);
-        } catch (ServicePackageNameIsEmptyException | AllServicesAreNullException e) {
+            checkServicesValidity(selectedFP, selectedMP, selectedFI, selectedMI);
+        } catch (AllServicesAreNullException e) {
             modelAndView.addObject("errorMessage", e.getMessage());
         }
 
@@ -83,9 +82,8 @@ public class CreateSPPageController {
     }
 
 
-    private void checkParametersValidity(String name, String service1, String service2, String service3, String service4)
-            throws AllServicesAreNullException, ServicePackageNameIsEmptyException {
-        if (name.isEmpty()) throw new ServicePackageNameIsEmptyException();
+    private void checkServicesValidity(String service1, String service2, String service3, String service4)
+            throws AllServicesAreNullException {
         if (service1 == null && service2 == null && service3 == null && service4 == null)
             throw new AllServicesAreNullException();
     }
@@ -97,6 +95,26 @@ public class CreateSPPageController {
         addParametersToModelAndView(modelAndView);
         modelAndView.addObject("errorMessage", e.getParameterName() + " parameter is missing!");
         return modelAndView;
+    }
+
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ModelAndView handleMissingParams(SQLIntegrityConstraintViolationException e) {
+        ModelAndView modelAndView = new ModelAndView("createSPPage");
+        addParametersToModelAndView(modelAndView);
+        modelAndView.addObject("errorMessage", formatSQLExceptionText(e.getMessage()));
+        return modelAndView;
+    }
+
+
+    private String formatSQLExceptionText(String exceptionText) {
+        String output = "DataBase error";
+
+        if (exceptionText.contains("Duplicate")) {
+            String[] exceptionTokens = exceptionText.split("'");
+            output = "A Service Package with name '" + exceptionTokens[1] + "' already exists in the Database!";
+        }
+        return output;
     }
 
 }

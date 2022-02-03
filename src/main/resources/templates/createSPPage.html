@@ -235,7 +235,7 @@
 <form action="#" th:action="@{/createServicePackage}" method="post" id="SPForm">
     <h3>Insert the Service Package name</h3>
     <label for="sp_name"></label>
-    <input type="text" placeholder="Service Package Name" name="name" id="sp_name" form="SPForm">
+    <input type="text" placeholder="Service Package Name" name="name" id="sp_name" form="SPForm" th:required="required">
 
     <hr>
 

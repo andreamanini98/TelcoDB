@@ -5,11 +5,14 @@ import it.polimi.telcodb.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 @Controller
 public class EmployeePageController {
@@ -77,6 +80,32 @@ public class EmployeePageController {
     public String createOptionalProduct(@RequestParam String name, @RequestParam BigDecimal monthlyFee) {
         employeeService.saveOptionalProduct(name, monthlyFee);
         return "employeePage";
+    }
+
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ModelAndView handleMissingParams(SQLIntegrityConstraintViolationException e) {
+        ModelAndView modelAndView = new ModelAndView("employeePage");
+        modelAndView.addObject("errorMessage", formatSQLExceptionText(e.getMessage()));
+        return modelAndView;
+    }
+
+
+    private String formatSQLExceptionText(String exceptionText) {
+        StringBuilder output = new StringBuilder("DataBase error");
+
+        if (exceptionText.contains("Duplicate")) {
+            output = new StringBuilder();
+            String[] exceptionTokens = exceptionText.split("'");
+            String[] parametersTokens = exceptionTokens[1].split("-");
+            output.append("An object with value").append(parametersTokens.length > 1 ? "s: " : ": ");
+            for (String parametersToken : parametersTokens) {
+                output.append("'").append(parametersToken).append("'").append(" ");
+            }
+            output.append("already exists in the Database!");
+        }
+
+        return output.toString();
     }
 
 }

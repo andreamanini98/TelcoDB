@@ -103,7 +103,7 @@
         }
 
         input[type="text"] {
-            width: 300px;
+            width: 400px;
         }
 
         input[type="number"] {
@@ -145,7 +145,7 @@
         }
 
         .explain {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 200;
             color: #ffffff;
             text-align: center;
@@ -168,6 +168,29 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
+        .h3_error {
+            margin: 0;
+            font-size: 40px;
+            color: #ff0000;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        .p_error {
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #ff0000;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 25px;
+            font-weight: 350;
+        }
+
+        .give_space {
+            margin-bottom: 40px;
+        }
     </style>
 
     <meta charset="UTF-8">
@@ -180,13 +203,16 @@
 <h1>Employee Page</h1>
 
 <p class="explain">
-    Welcome to the Employee Page, where you can create new elements to store in the Database.<br>
-    These elements comprise Services, Optional Products, Validity Periods and Service Packages.<br>
-    On the bottom of the page you can find two buttons:<br>
-    one allows to open the Inspection Page, where you can see some information about purchases, while the other allows
-    you to log-out from the application.<br>
-    Service Package creation will take place in another page, in order to enhance the application's ease of use.
+    Welcome to the Employee Page, where you can create new elements to store in the Database. These elements<br>
+    comprise Services, Optional Products, Validity Periods and Service Packages. On the bottom of the page you can<br>
+    find two buttons: one allows to open the Inspection Page, where you can see some information about purchases,<br>
+    while the other allows you to log-out from the application. Please note that you can't insert duplicated elements.
 </p>
+
+<div>
+    <h3 class="h3_error" th:if="${errorMessage}">ERROR</h3>
+    <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+</div>
 
 <hr>
 
@@ -304,7 +330,7 @@
     </table>
 </div>
 
-<hr>
+<div class="give_space"></div>
 
 <div>
     <table>
