@@ -198,6 +198,24 @@
         .give_space {
             margin-bottom: 20px;
         }
+
+        .h3_error {
+            margin: 0;
+            font-size: 40px;
+            color: #ff0000;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        .p_error {
+            margin: 0;
+            color: #ff0000;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 25px;
+            font-weight: 350;
+        }
     </style>
 
     <meta charset="UTF-8">
@@ -208,6 +226,11 @@
 <body>
 
 <h1>Service Package creation page</h1>
+
+<div>
+    <h3 class="h3_error" th:if="${errorMessage}">ERROR</h3>
+    <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+</div>
 
 <form action="#" th:action="@{/createServicePackage}" method="post" id="SPForm">
     <h3>Insert the Service Package name</h3>
@@ -241,7 +264,7 @@
         <div class="scrollable">
             <div class="left_div" th:each="validityPeriod : ${validityPeriodsList}">
                 <label for="vp_L">
-                    <input type="checkbox" name="selectedVP" form="SPForm" id="vp_L" class="custom_checkbox"
+                    <input type="checkbox" name="Validity Period" form="SPForm" id="vp_L" class="custom_checkbox"
                            th:value="${validityPeriod.getId()}"/>
                     <span th:text="${validityPeriod.toString()}"></span>
                 </label>

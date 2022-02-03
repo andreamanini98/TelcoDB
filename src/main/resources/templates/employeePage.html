@@ -220,12 +220,13 @@
                                     <label for="num_of_min">Number of minutes</label>
                                     <br>
                                     <input type="number" placeholder="0" name="nMinutes" form="mps_form"
-                                           id="num_of_min">
+                                           id="num_of_min" th:required="required">
                                 </td>
                                 <td>
                                     <label for="num_of_sms">Number of SMSs</label>
                                     <br>
-                                    <input type="number" placeholder="0" name="nSMSs" form="mps_form" id="num_of_sms">
+                                    <input type="number" placeholder="0" name="nSMSs" form="mps_form" id="num_of_sms"
+                                           th:required="required">
                                 </td>
                             </tr>
                             <tr>
@@ -233,15 +234,13 @@
                                     <label for="extra_min_fee">Extra minutes fee</label>
                                     <br>
                                     <input type="number" step=".01" placeholder="0.00" name="extraMinFee"
-                                           form="mps_form"
-                                           id="extra_min_fee">
+                                           form="mps_form" id="extra_min_fee" th:required="required">
                                 </td>
                                 <td>
                                     <label for="extra_sms_fee">Extra SMS fee</label>
                                     <br>
                                     <input type="number" step=".01" placeholder="0.00" name="extraSMSFee"
-                                           form="mps_form"
-                                           id="extra_sms_fee">
+                                           form="mps_form" id="extra_sms_fee" th:required="required">
                                 </td>
                             </tr>
                         </table>
@@ -258,7 +257,8 @@
                                 <td>
                                     <label for="fi_num_giga">Number of gigabytes</label>
                                     <br>
-                                    <input type="number" placeholder="0" name="nGiga" id="fi_num_giga">
+                                    <input type="number" placeholder="0" name="nGiga" id="fi_num_giga"
+                                           th:required="required">
                                 </td>
                             </tr>
                             <tr>
@@ -266,7 +266,7 @@
                                     <label for="fi_extra_giga_fee">Extra gigabytes fee</label>
                                     <br>
                                     <input type="number" step=".01" placeholder="0.00" name="extraGigaFee"
-                                           id="fi_extra_giga_fee">
+                                           id="fi_extra_giga_fee" th:required="required">
                                 </td>
                             </tr>
                         </table>
@@ -283,7 +283,8 @@
                                 <td>
                                     <label for="mi_num_of_giga">Number of gigabytes</label>
                                     <br>
-                                    <input type="number" placeholder="0" name="nGiga" id="mi_num_of_giga">
+                                    <input type="number" placeholder="0" name="nGiga" id="mi_num_of_giga"
+                                           th:required="required">
                                 </td>
                             </tr>
                             <tr>
@@ -291,7 +292,7 @@
                                     <label for="mi_extra_giga_fee">Extra gigabytes fee</label>
                                     <br>
                                     <input type="number" step=".01" placeholder="0.00" name="extraGigaFee"
-                                           id="mi_extra_giga_fee">
+                                           id="mi_extra_giga_fee" th:required="required">
                                 </td>
                             </tr>
                         </table>
@@ -317,13 +318,14 @@
                                 <td>
                                     <label for="vp_nm">Number of months</label>
                                     <br>
-                                    <input type="number" placeholder="0" name="nMonths" id="vp_nm" form="vp_form">
+                                    <input type="number" placeholder="0" name="nMonths" id="vp_nm" form="vp_form"
+                                           th:required="required">
                                 </td>
                                 <td>
                                     <label for="vp_mf">Monthly fee</label>
                                     <br>
                                     <input type="number" step=".01" placeholder="0.00" name="monthlyFee" id="vp_mf"
-                                           form="vp_form">
+                                           form="vp_form" th:required="required">
                                 </td>
                             </tr>
                         </table>
@@ -340,13 +342,14 @@
                                 <td>
                                     <label for="op_np">Name of the product</label>
                                     <br>
-                                    <input type="text" placeholder="Product Name" name="name" id="op_np" form="op_form">
+                                    <input type="text" placeholder="Product Name" name="name" id="op_np" form="op_form"
+                                           th:required="required">
                                 </td>
                                 <td>
                                     <label for="op_mf">Monthly fee</label>
                                     <br>
                                     <input type="number" step=".01" placeholder="0.00" name="monthlyFee" id="op_mf"
-                                           form="op_form">
+                                           form="op_form" th:required="required">
                                 </td>
                             </tr>
                         </table>
