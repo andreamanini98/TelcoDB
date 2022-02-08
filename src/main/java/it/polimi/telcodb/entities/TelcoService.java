@@ -151,7 +151,7 @@ public class TelcoService {
     public String toString() {
         switch (this.serviceType) {
             case FIXED_PHONE:
-                return serviceType + " - Id:" + Long.toString(id) + " ";
+                return serviceType + ": Id=" + Long.toString(id);
 
             case MOBILE_PHONE:
                 return serviceType + ": " + numberOfMinutes + " minutes - " + numberOfSMSs + " SMSs - "

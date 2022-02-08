@@ -86,6 +86,7 @@
             font-size: 30px;
             color: #ffffff;
             text-align: center;
+            font-weight: 400;
             font-family: 'Poppins', sans-serif;
         }
 
@@ -134,7 +135,7 @@
             display: inline-block;
             margin: 0 auto;
             height: 500px;
-            width: 45%;
+            width: 60%;
             overflow-y: scroll;
             overflow-x: hidden;
             font-size: 30px;
@@ -209,6 +210,7 @@
 
         .small_div {
             height: 15px;
+            text-align: left;
         }
 
         .no_margin_top_h2 {
@@ -246,10 +248,9 @@
     <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 </div>
 
-<p>Below you can see the list of available Service Packages offered<br>
-    by TelcoDB. From this page you can select a Service Package to see<br>
-    details about it, or you can proceed to the order page, where you can<br>
-    configure your selected Service Package and buy it.</p>
+<p>Below you can see the list of available Service Packages offered by TelcoDB. From this page you can select a<br>
+    Service Package to see details about it, or you can proceed to the buy service page, where you can configure<br>
+    your selected Service Package and buy it.</p>
 
 <div class="give_space"></div>
 
@@ -260,7 +261,7 @@
         <div class="scrollable">
             <div class="left_div" th:each="servicePackage : ${servicePackageList}">
                 <label for="op_L">
-                    <input type="radio" name="servicePackageId" form="SPForm" id="op_L" class="custom_radio"
+                    <input type="radio" name="Service Package" form="SPForm" id="op_L" class="custom_radio"
                            th:value="${servicePackage.getId()}"/>
                     <span th:text="${servicePackage.getName()}"></span>
                 </label>
