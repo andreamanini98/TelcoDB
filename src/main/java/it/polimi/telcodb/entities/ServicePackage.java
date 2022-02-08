@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedQuery(name = "ServicePackage.findAll", query = "SELECT s FROM ServicePackage s")
 public class ServicePackage {
 
     @Id

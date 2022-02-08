@@ -33,7 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers(
                         "/",
-                        "/registerEmployee"
+                        "/registerUser",
+                        "/openUserHomePage",
+                        "/registerEmployee",
+                        "/showServicePackageInfo",
+                        "/openShoppingPage"
                 ).permitAll()
                 .antMatchers(
                         "/openEmployeePage",
@@ -57,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/performLogout"))
-                .logoutSuccessUrl("/logoutSuccess").permitAll()
+                .logoutSuccessUrl("/").permitAll()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true);
     }

@@ -8,8 +8,8 @@ public class User {
 
     @Id
     private String username;
-    private String password;
     private String email;
+    private String password;
     @Column(columnDefinition = "TINYINT", length = 1)
     private boolean isInsolvent;
 
@@ -27,6 +27,14 @@ public class User {
     private List<ServicePackage> servicePackages;
 
     public User() {
+    }
+
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isInsolvent = false;
     }
 
 

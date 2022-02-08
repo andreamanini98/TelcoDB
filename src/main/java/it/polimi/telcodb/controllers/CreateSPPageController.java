@@ -63,7 +63,7 @@ public class CreateSPPageController {
 
     private void addParametersToModelAndView(ModelAndView modelAndView) {
         modelAndView.addObject("optionalProductsList", queryService.findAllOptionalProducts());
-        modelAndView.addObject("validityPeriodsList", queryService.findAllValidityPeriod());
+        modelAndView.addObject("validityPeriodsList", queryService.findAllValidityPeriods());
         modelAndView.addObject("fixedPhoneServicesList", queryService.findServiceByServiceType(ServiceType.FIXED_PHONE));
         modelAndView.addObject("mobilePhoneServicesList", queryService.findServiceByServiceType(ServiceType.MOBILE_PHONE));
         modelAndView.addObject("fixedInternetServicesList", queryService.findServiceByServiceType(ServiceType.FIXED_INTERNET));
