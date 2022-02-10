@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 public class UserService {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
 
     @Transactional

@@ -21,10 +21,10 @@ import java.util.Objects;
 public class CreateSPPageController {
 
     @Autowired
-    QueryService queryService;
+    private QueryService queryService;
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
 
     @RequestMapping("/openCreateSPPage")

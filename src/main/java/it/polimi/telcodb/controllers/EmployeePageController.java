@@ -18,7 +18,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class EmployeePageController {
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 

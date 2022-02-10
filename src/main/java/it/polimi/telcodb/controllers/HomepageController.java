@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomepageController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 

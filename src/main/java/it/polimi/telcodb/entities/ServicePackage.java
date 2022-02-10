@@ -16,7 +16,7 @@ public class ServicePackage {
     @ManyToMany(mappedBy = "servicePackages", fetch = FetchType.LAZY)
     private List<User> users;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "ServicePackageJTService",
             joinColumns = @JoinColumn(name = "servicePackageIdFK"),

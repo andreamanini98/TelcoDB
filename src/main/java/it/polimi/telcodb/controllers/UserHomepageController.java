@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserHomepageController {
 
     @Autowired
-    QueryService queryService;
+    private QueryService queryService;
 
 
     @RequestMapping("/openUserHomePageLogged")

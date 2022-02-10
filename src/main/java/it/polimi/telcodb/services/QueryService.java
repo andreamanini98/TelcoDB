@@ -16,7 +16,7 @@ import java.util.List;
 public class QueryService {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
 
     public List<OptionalProduct> findAllOptionalProducts() {

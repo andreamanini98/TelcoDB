@@ -12,6 +12,7 @@
 
     <style>
         body {
+            min-height: 100vh;
             background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgb(13, 15, 68) 52%, rgb(22, 37, 75) 100%);
         }
 
@@ -71,22 +72,11 @@
         }
 
         h3 {
-            margin-top: 15px;
+            margin-top: 25px;
             margin-bottom: 10px;
-            font-size: 40px;
-            color: #ffffff;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        h2 {
-            margin-top: 50px;
-            margin-bottom: 0;
-            text-decoration: underline;
             font-size: 30px;
             color: #ffffff;
             text-align: center;
-            font-weight: 400;
             font-family: 'Poppins', sans-serif;
         }
 
@@ -131,10 +121,25 @@
             margin: 0;
         }
 
+        .submit_button {
+            height: 40px;
+            width: 100px;
+            background-color: #e87464;
+            color: #ffffff;
+            padding: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            display: inline;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
         .scrollable {
             display: inline-block;
             margin: 0 auto;
-            height: 500px;
+            height: 300px;
             width: 60%;
             overflow-y: scroll;
             overflow-x: hidden;
@@ -143,6 +148,21 @@
             backdrop-filter: blur(10px);
             background-color: rgba(153, 153, 154, 0.38);
             border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .custom_checkbox {
+            -webkit-appearance: none;
+            width: 27px;
+            height: 27px;
+            background-color: rgba(255, 255, 255, 0.53);
+            position: relative;
+            vertical-align: middle;
+            margin-right: 20px;
+            border-radius: 7px;
+        }
+
+        .custom_checkbox:checked {
+            background: linear-gradient(#4376f1, #23a2f6);
         }
 
         .custom_radio {
@@ -168,6 +188,15 @@
         .center_div {
             width: 100%;
             text-align: center;
+        }
+
+        .explain_p {
+            color: #ffffff;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 17px;
+            font-weight: 350;
+            margin: 0;
         }
 
         .give_space {
@@ -200,23 +229,6 @@
             color: #ff0000;
         }
 
-        .info_span {
-            color: #ffffff;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 20px;
-            font-weight: 350;
-        }
-
-        .small_div {
-            height: 15px;
-            text-align: left;
-        }
-
-        .no_margin_top_h2 {
-            margin-top: 10px;
-        }
-
         .authenticated_div {
             color: #ffffff;
             text-align: right;
@@ -224,10 +236,28 @@
             font-size: 20px;
             font-weight: 250;
         }
+
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 0;
+            text-decoration: underline;
+            font-size: 30px;
+            color: #ffffff;
+            text-align: center;
+            font-weight: 400;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input[type="date"] {
+            width: 400px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 450;
+        }
     </style>
 
     <meta charset="UTF-8">
-    <title>User Homepage</title>
+    <title>Buy Service Package Page</title>
 </head>
 
 
@@ -240,7 +270,7 @@
     &emsp;
 </div>
 
-<h1>Welcome to the User Homepage</h1>
+<h1>Buy ServicePackage Page</h1>
 
 <div>
     <!--/*@thymesVar id="errorMessage" type="error"*/-->
@@ -249,77 +279,93 @@
     <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 </div>
 
-<p>Below you can see the list of available Service Packages offered by TelcoDB. From this page you can select a<br>
-    Service Package to see details about it, or you can proceed to the buy service page, where you can configure<br>
-    your selected Service Package and buy it.</p>
+<div th:if="${isServicePackageSelected} == false">
+    <h3>Available Service Packages</h3>
+    <form action="#" th:action="@{/selectServicePackageToBuy}" method="post" id="SPForm">
+        <div class="center_div">
+            <div class="scrollable">
+                <div class="left_div" th:each="servicePackage : ${servicePackageList}">
+                    <label for="sp_L">
+                        <input type="radio" name="Service Package" form="SPForm" id="sp_L" class="custom_radio"
+                               th:value="${servicePackage.getId()}"/>
+                        <span th:text="${servicePackage.getName()}"></span>
+                    </label>
+                </div>
+            </div>
+            <p>Press this button to select the Service Package you want to buy</p>
+            <button type="submit" name="action" value="showInfo" form="SPForm" class="button">Select</button>
+        </div>
+    </form>
+</div>
 
-<div class="give_space"></div>
+<div th:if="${isServicePackageSelected}">
+    <h3>You selected: '<span th:text="${selectedServicePackage.getName()}"></span>'</h3>
 
-<h3>Available Service Packages</h3>
-
-<form action="#" th:action="@{/showServicePackageInfo}" method="post" id="SPForm">
-    <div class="center_div">
-        <div class="scrollable">
-            <div class="left_div" th:each="servicePackage : ${servicePackageList}">
-                <label for="op_L">
-                    <input type="radio" name="Service Package" form="SPForm" id="op_L" class="custom_radio"
-                           th:value="${servicePackage.getId()}"/>
-                    <span th:text="${servicePackage.getName()}"></span>
-                </label>
+    <form action="#" th:action="@{/openConfirmationPage}" method="post" id="select_sp_params_form">
+        <h2>Optional Products</h2>
+        <p class="explain_p">Select Optional Products to be associated with the Service Package.</p>
+        <p class="explain_p">The list of selected Optional Products may be empty.</p>
+        <div class="give_space"></div>
+        <div class="center_div">
+            <div class="scrollable">
+                <div class="left_div" th:each="optionalProduct : ${selectedServicePackage.getOptionalProducts()}">
+                    <label for="op_L">
+                        <input type="checkbox" name="selectedOP" form="select_sp_params_form" id="op_L"
+                               class="custom_checkbox" th:value="${optionalProduct.getId()}"/>
+                        <span th:text="${optionalProduct.toString()}"></span>
+                    </label>
+                </div>
             </div>
         </div>
-    </div>
-</form>
-<table>
-    <tr>
-        <td>
-            <p>Press this button to show details about the selected Service Package</p>
-            <p>
-                <button type="submit" name="action" value="showInfo" form="SPForm" class="button">Info</button>
-            </p>
-        </td>
-        <td>
-            <p>Press this button to proceed to the purchase of a Service Package</p>
-            <p><a th:href="@{/openBuyServicePackagePage}">
-                <button class="button" style="vertical-align:middle"><span>Shop</span></button>
-            </a></p>
-        </td>
-    </tr>
-</table>
-<div class="give_space"></div>
 
-<div class="div_as_form" th:if="${showInfo}">
+        <hr>
+
+        <h3>Validity Periods</h3>
+        <p class="explain_p">Select one Validity Period to be associated with the Service Package.</p>
+        <div class="give_space"></div>
+        <div class="center_div">
+            <div class="scrollable">
+                <div class="left_div" th:each="validityPeriod : ${selectedServicePackage.getValidityPeriods()}">
+                    <label for="vp_L">
+                        <input type="radio" name="Validity Period" form="select_sp_params_form" id="vp_L"
+                               class="custom_radio" th:value="${validityPeriod.getId()}"/>
+                        <span th:text="${validityPeriod.toString()}"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <h3>Start date of subscription</h3>
+        <p class="explain_p">Select the date in which you want to start your subscription.</p>
+        <div class="give_space"></div>
+        <div class="center_div">
+            <label for="date_L">
+                <input type="date" name="subscriptionDate" form="select_sp_params_form" id="date_L"
+                       th:required="required" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+            </label>
+        </div>
+    </form>
+
     <hr>
-    <h3>Service Package Info</h3>
 
-    <div class="scrollable">
-        <h2 class="no_margin_top_h2">Service Package Name</h2>
-        <div class="small_div">
-            <label>
-                <span class="info_span" th:text="${servicePackageToShow.getName()}"></span>
-            </label>
-        </div>
-
-        <h2>Optional Products</h2>
-        <div class="small_div" th:each="optionalProduct : ${servicePackageToShow.getOptionalProducts()}">
-            <label>
-                <span class="info_span" th:text="${optionalProduct.toString()}"></span>
-            </label>
-        </div>
-
-        <h2>Validity Periods</h2>
-        <div class="small_div" th:each="validityPeriod : ${servicePackageToShow.getValidityPeriods()}">
-            <label>
-                <span class="info_span" th:text="${validityPeriod.toString()}"></span>
-            </label>
-        </div>
-
-        <h2>Bundled Services</h2>
-        <div class="small_div" th:each="service : ${servicePackageToShow.getServices()}">
-            <label>
-                <span class="info_span" th:text="${service.toString()}"></span>
-            </label>
-        </div>
+    <div class="center_div">
+        <table>
+            <tr>
+                <td>
+                    <p>Press the button to open the confirmation page</p>
+                    <button type="submit" value="associate" form="select_sp_params_form" class="submit_button">Confirm
+                    </button>
+                </td>
+                <td>
+                    <p>Press the button to select a different Service Package</p>
+                    <p><a th:href="@{/resetBuyServicePackagePage}">
+                        <button class="button" style="vertical-align:middle"><span>Refresh</span></button>
+                    </a></p>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 

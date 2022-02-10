@@ -219,6 +219,7 @@
 </p>
 
 <div>
+    <!--/*@thymesVar id="errorMessage" type="error"*/-->
     <h3 class="h3_error" th:if="${errorMessage}">
         <i class="fas fa-exclamation-triangle"></i>ERROR <i class="fas fa-exclamation-triangle"></i></h3>
     <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>

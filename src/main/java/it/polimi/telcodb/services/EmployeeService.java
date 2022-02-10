@@ -15,7 +15,7 @@ import java.util.List;
 public class EmployeeService {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
 
     @Transactional
