@@ -12,6 +12,7 @@
 
     <style>
         body {
+            min-height: 100vh;
             background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgb(13, 15, 68) 52%, rgb(22, 37, 75) 100%);
         }
 
@@ -134,8 +135,8 @@
         .scrollable {
             display: inline-block;
             margin: 0 auto;
-            height: 500px;
-            width: 60%;
+            height: 400px;
+            width: 50%;
             overflow-y: scroll;
             overflow-x: hidden;
             font-size: 30px;
@@ -201,16 +202,15 @@
         }
 
         .info_span {
-            color: #ffffff;
-            text-align: center;
+            color: white;
+            font-weight: 250;
+            font-size: 17px;
             font-family: 'Poppins', sans-serif;
-            font-size: 20px;
-            font-weight: 350;
         }
 
         .small_div {
             height: 15px;
-            text-align: left;
+            text-align: center;
         }
 
         .no_margin_top_h2 {
@@ -288,7 +288,7 @@
 </table>
 <div class="give_space"></div>
 
-<div class="div_as_form" th:if="${showInfo}">
+<div th:if="${showInfo}">
     <hr>
     <h3>Service Package Info</h3>
 
@@ -314,7 +314,7 @@
             </label>
         </div>
 
-        <h2>Bundled Services</h2>
+        <h2>Services</h2>
         <div class="small_div" th:each="service : ${servicePackageToShow.getServices()}">
             <label>
                 <span class="info_span" th:text="${service.toString()}"></span>

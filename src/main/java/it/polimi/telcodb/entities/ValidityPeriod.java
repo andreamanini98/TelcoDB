@@ -18,9 +18,6 @@ public class ValidityPeriod {
     private List<ServicePackage> servicePackages;
 
     @OneToMany(mappedBy = "validityPeriod", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<OptionalProduct> optionalProducts;
-
-    @OneToMany(mappedBy = "validityPeriod", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UserOrder> userOrders;
 
     public ValidityPeriod() {
@@ -69,16 +66,6 @@ public class ValidityPeriod {
 
     public void setServicePackages(List<ServicePackage> servicePackages) {
         this.servicePackages = servicePackages;
-    }
-
-
-    public List<OptionalProduct> getOptionalProducts() {
-        return optionalProducts;
-    }
-
-
-    public void setOptionalProducts(List<OptionalProduct> optionalProducts) {
-        this.optionalProducts = optionalProducts;
     }
 
 

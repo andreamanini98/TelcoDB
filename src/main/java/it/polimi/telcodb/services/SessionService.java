@@ -24,6 +24,7 @@ public class SessionService {
     private QueryService queryService;
 
     // TODO pensa come rimuovere dalla sessione gli oggetti che ci metti dentro quando non serviranno più
+    //      tipo quando un nuovo ordine viene creato
 
     public void addServicePackageToServicePackageOrder(String servicePackageId, HttpSession session) {
         getServicePackageOrder(session).setServicePackage(queryService.findServicePackageById(servicePackageId));
@@ -41,10 +42,6 @@ public class SessionService {
     }
 
 
-    // TODO la validità degli optional products non può essere settata come singola colonna
-    //      forse devi fare una coppia ValidityPeriod/Utente
-    //      Ma se fai così è un'informazione ridondante perché la puoi ricavare semplicemente dal validity period che l'utente ha scelto
-
     @Transactional
     public ServicePackageOrder addSelectedItemsToServicePackageOrder(HttpSession session, List<String> selectedOP, String validityPeriod, String subscriptionDate) {
         ServicePackageOrder spO = getServicePackageOrder(session);
@@ -58,10 +55,7 @@ public class SessionService {
 
         if (selectedOP != null) {
             for (String s : selectedOP) {
-                //
                 OptionalProduct op = entityManager.find(OptionalProduct.class, Long.parseLong(s));
-                //
-                op.setValidityPeriod(vp);
                 optionalProducts.add(op);
             }
         }

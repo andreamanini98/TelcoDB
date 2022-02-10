@@ -17,10 +17,6 @@ public class OptionalProduct {
     @ManyToMany(mappedBy = "optionalProducts", fetch = FetchType.LAZY)
     private List<ServicePackage> servicePackages;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "validityPeriodIdFK")
-    private ValidityPeriod validityPeriod;
-
     @ManyToMany(mappedBy = "optionalProducts", fetch = FetchType.LAZY)
     private List<UserOrder> userOrders;
 
@@ -70,16 +66,6 @@ public class OptionalProduct {
 
     public void setServicePackages(List<ServicePackage> servicePackages) {
         this.servicePackages = servicePackages;
-    }
-
-
-    public ValidityPeriod getValidityPeriod() {
-        return validityPeriod;
-    }
-
-
-    public void setValidityPeriod(ValidityPeriod validityPeriod) {
-        this.validityPeriod = validityPeriod;
     }
 
 
