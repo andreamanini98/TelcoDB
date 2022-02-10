@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/selectServicePackageToBuy",
                         "/openConfirmationPage",
                         "/resetBuyServicePackagePage",
-                        "/registerBeforeBuyingServicePackage"
+                        "/registerBeforeBuyingServicePackage",
+                        "/registerUserBeforePurchase"
                 ).permitAll()
                 .antMatchers(
                         "/openEmployeePage",

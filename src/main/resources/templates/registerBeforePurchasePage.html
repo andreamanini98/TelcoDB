@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/721875f953.js" crossorigin="anonymous"></script>
+
+    <style>
+        *, *:before, *:after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #120f2a;
+        }
+
+        .background {
+            width: 430px;
+            height: 520px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+        }
+
+        .background .shape {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .shape:first-child {
+            background: linear-gradient(#1845ad, #23a2f6);
+            left: -80px;
+            top: -80px;
+        }
+
+        .shape:last-child {
+            background: linear-gradient(to right, #ff512f, #f09819);
+            right: -30px;
+            bottom: -80px;
+        }
+
+        form, .registered_user_div {
+            height: 520px;
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.13);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+            padding: 25px 35px;
+        }
+
+        form * {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            letter-spacing: 1px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 25px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        input {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        ::placeholder {
+            color: #e5e5e5;
+        }
+
+        div {
+            width: 150px;
+            border-radius: 3px;
+            padding: 5px 10px 10px 5px;
+            background: rgba(255, 255, 255, 0.27);
+            color: #eaf0fb;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        input[type="submit"] {
+            margin-top: 30px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .input_div {
+            width: 100%;
+            background-color: transparent;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        i {
+            margin-right: 20px;
+        }
+
+        .success_h3 {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            letter-spacing: 1px;
+            font-size: 37px;
+            font-weight: 450;
+            text-align: center;
+            margin-bottom: 70px;
+            text-decoration: underline;
+        }
+
+        .success_p {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            letter-spacing: 1px;
+            font-size: 20px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            background-color: #2380be;
+            color: #ffffff;
+            padding: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            border: none;
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+
+
+<body>
+
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<form action="#" th:if="${isUserRegistered} == false" th:action="@{/registerUserBeforePurchase}" method="post">
+    <h3>Register Here</h3>
+
+    <label for="username">Username</label>
+    <div class="input_div">
+        <i class="far fa-address-book"></i>
+        <input type="text" placeholder="Username" name="username" id="username" th:required="required">
+    </div>
+
+    <label for="email">Email</label>
+    <div class="input_div">
+        <i class="far fa-envelope"></i>
+        <input type="text" placeholder="Email" name="email" id="email" th:required="required">
+    </div>
+
+    <label for="password">Password</label>
+    <div class="input_div">
+        <i class="fas fa-unlock-alt"></i>
+        <input type="password" placeholder="Password" name="password" id="password" th:required="required">
+    </div>
+
+    <input type="submit" value="Register">
+</form>
+
+<div class="registered_user_div" th:if="${isUserRegistered}">
+    <h3 class="success_h3">Registration successful</h3>
+    <p class="success_p">Now please log in to go back to the confirmation page</p>
+    <p><a th:href="@{/openConfirmationPageRegistered}">
+        <button class="button" style="vertical-align:middle"><span>Login</span></button>
+    </a></p>
+</div>
+
+</body>
+
+</html>

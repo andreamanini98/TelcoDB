@@ -70,6 +70,16 @@ public class BuyServicePackagePageController {
     }
 
 
+    @RequestMapping("/openConfirmationPageRegistered")
+    public ModelAndView openConfirmationPageRegistered(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("confirmationPage");
+        ServicePackageOrder spO = sessionService.getServicePackageOrder(session);
+        modelAndView.addObject("servicePackageOrder", spO);
+        modelAndView.addObject("totalCost", confirmationPageService.computeTotalCost(spO.getValidityPeriod(), spO.getOptionalProducts()));
+        return modelAndView;
+    }
+
+
     private void addServicePackageIfAlreadySelected(ModelAndView modelAndView, HttpSession session) {
         boolean isServicePackageInOrder = sessionService.isServicePackageAlreadySelected(session);
         modelAndView.addObject("isServicePackageSelected", isServicePackageInOrder);
