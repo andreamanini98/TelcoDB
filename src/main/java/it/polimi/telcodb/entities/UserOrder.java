@@ -19,8 +19,6 @@ public class UserOrder {
     @Temporal(TemporalType.DATE)
     private Date startDateOfSubscription;
     @Column(columnDefinition = "TINYINT", length = 1)
-    private boolean isRejected;
-    @Column(columnDefinition = "TINYINT", length = 1)
     private boolean isValid;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -97,16 +95,6 @@ public class UserOrder {
 
     public void setStartDateOfSubscription(Date startDateOfSubscription) {
         this.startDateOfSubscription = startDateOfSubscription;
-    }
-
-
-    public boolean isRejected() {
-        return isRejected;
-    }
-
-
-    public void setRejected(boolean rejected) {
-        isRejected = rejected;
     }
 
 

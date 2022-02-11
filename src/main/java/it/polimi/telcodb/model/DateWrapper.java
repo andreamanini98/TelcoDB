@@ -26,18 +26,18 @@ public class DateWrapper {
 
     private void setDate(String date) {
         try {
-            this.date = new SimpleDateFormat("dd/MM/yyyy").parse(invertDate(date));
+            this.date = new SimpleDateFormat("yyyy/MM/dd").parse(parseDate(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
 
-    public String invertDate(String date) {
-        StringBuilder invertedDate = new StringBuilder();
+    public String parseDate(String date) {
+        StringBuilder parsedDate = new StringBuilder();
         String[] dateTokens = date.split("-");
-        invertedDate.append(dateTokens[2]).append("/").append(dateTokens[1]).append("/").append(dateTokens[0]);
-        return invertedDate.toString();
+        parsedDate.append(dateTokens[0]).append("/").append(dateTokens[1]).append("/").append(dateTokens[2]);
+        return parsedDate.toString();
     }
 
 }

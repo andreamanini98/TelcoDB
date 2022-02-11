@@ -1,7 +1,6 @@
 package it.polimi.telcodb.controllers;
 
 import it.polimi.telcodb.model.ServicePackageOrder;
-import it.polimi.telcodb.services.ConfirmationPageService;
 import it.polimi.telcodb.services.ExceptionFormatterService;
 import it.polimi.telcodb.services.SessionService;
 import it.polimi.telcodb.services.UserService;
@@ -28,9 +27,6 @@ public class ConfirmationPageController {
 
     @Autowired
     private ExceptionFormatterService exceptionFormatterService;
-
-    @Autowired
-    private ConfirmationPageService confirmationPageService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 

@@ -280,10 +280,29 @@
 </div>
 
 <div class="authenticated_div" sec:authorize="isAuthenticated()">
-    <p>Press this button to buy the Service Package</p>
-    <p><a th:href="@{/buyServicePackage}">
-        <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span></button>
-    </a></p>
+    <p>For didactic purpose only, here we have two different buttons: the one on the left will result in a correct
+        payment, while the one on the right will result in an incorrect payment</p>
+    <div class="center_div">
+        <table>
+            <tr>
+                <td>
+                    <p>Correct payment</p>
+                    <p><a th:href="@{/buyServicePackageCorrect}">
+                        <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
+                        </button>
+                    </a></p>
+                </td>
+                <td>
+                    <p>Wrong payment</p>
+                    <p><a th:href="@{/buyServicePackageInvalid}">
+                        <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
+                        </button>
+                    </a></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
 </div>
 
 <div class="authenticated_div" sec:authorize="!isAuthenticated()">

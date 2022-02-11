@@ -1,7 +1,6 @@
 package it.polimi.telcodb.controllers;
 
 import it.polimi.telcodb.model.ServicePackageOrder;
-import it.polimi.telcodb.services.ConfirmationPageService;
 import it.polimi.telcodb.services.QueryService;
 import it.polimi.telcodb.services.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,6 @@ public class BuyServicePackagePageController {
 
     @Autowired
     private SessionService sessionService;
-
-    @Autowired
-    private ConfirmationPageService confirmationPageService;
 
 
     @RequestMapping("/openBuyServicePackagePage")
