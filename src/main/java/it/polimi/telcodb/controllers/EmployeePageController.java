@@ -2,6 +2,7 @@ package it.polimi.telcodb.controllers;
 
 import it.polimi.telcodb.enums.ServiceType;
 import it.polimi.telcodb.services.EmployeeService;
+import it.polimi.telcodb.services.ExceptionFormatterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class EmployeePageController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private ExceptionFormatterService exceptionFormatterService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -86,26 +90,8 @@ public class EmployeePageController {
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ModelAndView handleMissingParams(SQLIntegrityConstraintViolationException e) {
         ModelAndView modelAndView = new ModelAndView("employeePage");
-        modelAndView.addObject("errorMessage", formatSQLExceptionText(e.getMessage()));
+        modelAndView.addObject("errorMessage", exceptionFormatterService.formatSQLGenericElementAlreadyExists(e.getMessage()));
         return modelAndView;
-    }
-
-
-    private String formatSQLExceptionText(String exceptionText) {
-        StringBuilder output = new StringBuilder("DataBase error");
-
-        if (exceptionText.contains("Duplicate")) {
-            output = new StringBuilder();
-            String[] exceptionTokens = exceptionText.split("'");
-            String[] parametersTokens = exceptionTokens[1].split("-");
-            output.append("An object with value").append(parametersTokens.length > 1 ? "s: " : ": ");
-            for (String parametersToken : parametersTokens) {
-                output.append("'").append(parametersToken).append("'").append(" ");
-            }
-            output.append("already exists in the Database!");
-        }
-
-        return output.toString();
     }
 
 }

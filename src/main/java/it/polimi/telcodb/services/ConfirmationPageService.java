@@ -10,13 +10,6 @@ import java.util.List;
 @Service
 public class ConfirmationPageService {
 
-    public BigDecimal computeTotalCost(ValidityPeriod validityPeriod, List<OptionalProduct> optionalProductList) {
-        BigDecimal result = validityPeriod.getMonthlyFee().multiply(BigDecimal.valueOf(validityPeriod.getNumberOfMonths()));
-        if (optionalProductList != null) {
-            for (OptionalProduct o : optionalProductList)
-                result = result.add(o.getMonthlyFee().multiply(BigDecimal.valueOf(validityPeriod.getNumberOfMonths())));
-        }
-        return result;
-    }
+    // TODO methods to create and save orders go here
 
 }

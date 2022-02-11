@@ -4,6 +4,7 @@ import it.polimi.telcodb.entities.OptionalProduct;
 import it.polimi.telcodb.entities.ServicePackage;
 import it.polimi.telcodb.entities.ValidityPeriod;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ServicePackageOrder {
@@ -58,6 +59,16 @@ public class ServicePackageOrder {
 
     public void setSubscriptionDateWrapper(DateWrapper subscriptionDateWrapper) {
         this.subscriptionDateWrapper = subscriptionDateWrapper;
+    }
+
+
+    public BigDecimal computeTotalCost() {
+        BigDecimal result = validityPeriod.getMonthlyFee().multiply(BigDecimal.valueOf(validityPeriod.getNumberOfMonths()));
+        if (optionalProducts != null) {
+            for (OptionalProduct o : optionalProducts)
+                result = result.add(o.getMonthlyFee().multiply(BigDecimal.valueOf(validityPeriod.getNumberOfMonths())));
+        }
+        return result;
     }
 
 }

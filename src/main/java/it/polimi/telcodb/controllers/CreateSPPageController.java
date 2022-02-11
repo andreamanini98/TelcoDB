@@ -3,6 +3,7 @@ package it.polimi.telcodb.controllers;
 import it.polimi.telcodb.enums.ServiceType;
 import it.polimi.telcodb.exceptions.AllServicesAreNullException;
 import it.polimi.telcodb.services.EmployeeService;
+import it.polimi.telcodb.services.ExceptionFormatterService;
 import it.polimi.telcodb.services.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class CreateSPPageController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private ExceptionFormatterService exceptionFormatterService;
 
 
     @RequestMapping("/openCreateSPPage")
@@ -102,19 +106,8 @@ public class CreateSPPageController {
     public ModelAndView handleMissingParams(SQLIntegrityConstraintViolationException e) {
         ModelAndView modelAndView = new ModelAndView("createSPPage");
         addParametersToModelAndView(modelAndView);
-        modelAndView.addObject("errorMessage", formatSQLExceptionText(e.getMessage()));
+        modelAndView.addObject("errorMessage", exceptionFormatterService.formatSQLServicePackageAlreadyExists(e.getMessage()));
         return modelAndView;
-    }
-
-
-    private String formatSQLExceptionText(String exceptionText) {
-        String output = "DataBase error";
-
-        if (exceptionText.contains("Duplicate")) {
-            String[] exceptionTokens = exceptionText.split("'");
-            output = "A Service Package with name '" + exceptionTokens[1] + "' already exists in the Database!";
-        }
-        return output;
     }
 
 }

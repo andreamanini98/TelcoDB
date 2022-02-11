@@ -65,17 +65,7 @@ public class BuyServicePackagePageController {
         ModelAndView modelAndView = new ModelAndView("confirmationPage");
         ServicePackageOrder spO = sessionService.addSelectedItemsToServicePackageOrder(session, selectedOP, validityPeriod, subscriptionDate);
         modelAndView.addObject("servicePackageOrder", spO);
-        modelAndView.addObject("totalCost", confirmationPageService.computeTotalCost(spO.getValidityPeriod(), spO.getOptionalProducts()));
-        return modelAndView;
-    }
-
-
-    @RequestMapping("/openConfirmationPageRegistered")
-    public ModelAndView openConfirmationPageRegistered(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("confirmationPage");
-        ServicePackageOrder spO = sessionService.getServicePackageOrder(session);
-        modelAndView.addObject("servicePackageOrder", spO);
-        modelAndView.addObject("totalCost", confirmationPageService.computeTotalCost(spO.getValidityPeriod(), spO.getOptionalProducts()));
+        modelAndView.addObject("totalCost", spO.computeTotalCost());
         return modelAndView;
     }
 
