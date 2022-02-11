@@ -18,11 +18,21 @@ public class OrderManagerService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    // TODO per resettare l'insolvent a false puoi fare un metodo a parte che prende solo i servizi di cui l'utente
+    //      non è riuscito a pagare
 
     @Transactional
-    public void createOrder(String username, ServicePackageOrder spO) {
+    public void createOrder(String username, ServicePackageOrder spO, boolean isOrderValid) {
         User user = entityManager.find(User.class, username);
         UserOrder order = new UserOrder();
+
+        user.setInsolvent(!isOrderValid);
+        if (!isOrderValid)
+            user.setFailedPayments(user.getFailedPayments() + 1);
+        if (user.getFailedPayments() == 3) {
+            // TODO handle alert generation
+            user.setFailedPayments(0);
+        }
 
         order.setUser(user);
         order.setDateOfCreation(new Date());
@@ -32,17 +42,19 @@ public class OrderManagerService {
         order.setOptionalProducts(spO.getOptionalProducts());
         order.setTotalValue(spO.computeTotalCost());
         order.setStartDateOfSubscription(spO.getSubscriptionDateWrapper().getDate());
-        order.setValid(true);
+        order.setValid(isOrderValid);
 
-        ActivationSchedule activationSchedule = new ActivationSchedule();
-        activationSchedule.setStartDate(spO.getSubscriptionDateWrapper().getDate());
-        activationSchedule.setEndDate(
-                DateUtils.addMonths(
-                        spO.getSubscriptionDateWrapper().getDate(),
-                        spO.getValidityPeriod().getNumberOfMonths()
-                )
-        );
-        order.setActivationSchedule(activationSchedule);
+        if (isOrderValid) {
+            ActivationSchedule activationSchedule = new ActivationSchedule();
+            activationSchedule.setStartDate(spO.getSubscriptionDateWrapper().getDate());
+            activationSchedule.setEndDate(
+                    DateUtils.addMonths(
+                            spO.getSubscriptionDateWrapper().getDate(),
+                            spO.getValidityPeriod().getNumberOfMonths()
+                    )
+            );
+            order.setActivationSchedule(activationSchedule);
+        }
 
         entityManager.persist(order);
     }

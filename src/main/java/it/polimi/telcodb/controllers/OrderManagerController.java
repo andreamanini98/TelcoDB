@@ -22,15 +22,22 @@ public class OrderManagerController {
 
     @RequestMapping("/buyServicePackageCorrect")
     public ModelAndView buyServicePackageCorrect(Principal principal, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
-        orderManagerService.createOrder(principal.getName(), sessionService.getServicePackageOrder(session));
-        session.removeAttribute("spO");
-        return modelAndView;
+        return addParametersToOrderCreatedPage(principal.getName(), session, true);
     }
 
-    // nel metodo che ti crea l'ordine passagli un booleano che ti fa un ordine giusto o sbagliato in base al suo valore
-    // fai comunque un altro metodo che ti prende la richiesta di fare un ordine sbagliato o vedi come conviene di più
-    // metti che se l'ordine è giusto ti sposti nella pagina ordercreatedpage e mostri qualche avviso di correttezza, altrimenti lo
-    // stesso ma con l'ordine che è fallito
+
+    @RequestMapping("/buyServicePackageInvalid")
+    public ModelAndView buyServicePackageInvalid(Principal principal, HttpSession session) {
+        return addParametersToOrderCreatedPage(principal.getName(), session, false);
+    }
+
+
+    private ModelAndView addParametersToOrderCreatedPage(String username, HttpSession session, boolean isOrderValid) {
+        ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
+        orderManagerService.createOrder(username, sessionService.getServicePackageOrder(session), isOrderValid);
+        session.removeAttribute("spO");
+        modelAndView.addObject("isOrderValid", isOrderValid);
+        return modelAndView;
+    }
 
 }
