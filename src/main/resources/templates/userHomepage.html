@@ -264,7 +264,7 @@
             <div class="scrollable">
                 <div class="left_div" th:each="order : ${invalidOrders}">
                     <label for="op_L_again">
-                        <input type="radio" name="Service Package" form="SPForm_again" id="op_L_again"
+                        <input type="radio" name="Order" form="SPForm_again" id="op_L_again"
                                class="custom_radio" th:value="${order.getId()}"/>
                         <span>Order </span>
                         <span th:text="${order.getId()}"></span>

@@ -62,6 +62,7 @@ public class BuyServicePackagePageController {
         ServicePackageOrder spO = sessionService.addSelectedItemsToServicePackageOrder(session, selectedOP, validityPeriod, subscriptionDate);
         modelAndView.addObject("servicePackageOrder", spO);
         modelAndView.addObject("totalCost", spO.computeTotalCost());
+        modelAndView.addObject("isTryingAgain", false);
         return modelAndView;
     }
 

@@ -59,6 +59,7 @@ public class ConfirmationPageController {
         ServicePackageOrder spO = sessionService.getServicePackageOrder(session);
         modelAndView.addObject("servicePackageOrder", spO);
         modelAndView.addObject("totalCost", spO.computeTotalCost());
+        modelAndView.addObject("isTryingAgain", false);
         return modelAndView;
     }
 

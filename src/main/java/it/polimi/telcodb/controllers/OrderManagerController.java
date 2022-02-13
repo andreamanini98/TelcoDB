@@ -32,6 +32,20 @@ public class OrderManagerController {
     }
 
 
+    @RequestMapping("/buyServicePackageCorrectAgain")
+    public ModelAndView buyServicePackageCorrectAgain() {
+        ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
+        return modelAndView;
+    }
+
+
+    @RequestMapping("/buyServicePackageInvalidAgain")
+    public ModelAndView buyServicePackageInvalidAgain() {
+        ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
+        return modelAndView;
+    }
+
+
     private ModelAndView addParametersToOrderCreatedPage(String username, HttpSession session, boolean isOrderValid) {
         ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
         orderManagerService.createOrder(username, sessionService.getServicePackageOrder(session), isOrderValid);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 
 @Controller
 public class UserHomepageController {
@@ -46,6 +47,16 @@ public class UserHomepageController {
     }
 
 
+    @PostMapping("/tryServicePackagePaymentAgain")
+    public ModelAndView tryServicePackagePaymentAgain(@RequestParam(name = "Order") String orderId) {
+        ModelAndView modelAndView = new ModelAndView("confirmationPage");
+        modelAndView.addObject("isTryingAgain", true);
+        modelAndView.addObject("dateFormatter", new SimpleDateFormat("dd/MM/yyyy"));
+        modelAndView.addObject("orderToBuyAgain", queryService.findUserOrderById(orderId));
+        return modelAndView;
+    }
+
+
     private void addParametersToModelAndView(ModelAndView modelAndView) {
         modelAndView.addObject("servicePackageList", queryService.findAllServicePackages());
     }
@@ -69,9 +80,10 @@ public class UserHomepageController {
 
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ModelAndView handleMissingParams(MissingServletRequestParameterException e) {
+    public ModelAndView handleMissingParams(MissingServletRequestParameterException e, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("userHomepage");
         addParametersToModelAndView(modelAndView);
+        if (principal != null) addInvalidOrdersInfoToModelAndView(modelAndView, principal.getName());
         modelAndView.addObject("errorMessage", e.getParameterName() + " parameter is missing!");
         return modelAndView;
     }

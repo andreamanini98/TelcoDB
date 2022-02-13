@@ -63,4 +63,10 @@ public class QueryService {
         return entityManager.find(ServicePackage.class, Long.parseLong(id));
     }
 
+
+    @Transactional
+    public UserOrder findUserOrderById(String id) {
+        return entityManager.find(UserOrder.class, Long.parseLong(id));
+    }
+
 }

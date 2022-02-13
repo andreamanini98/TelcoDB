@@ -238,48 +238,47 @@
     <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 </div>
 
-<h3>Here is a summary of your selected Service Package</h3>
+<div th:if="${isTryingAgain}">
+    <h3>You're trying to purchase again this order</h3>
 
-<p class="total_cost">Total cost to be pre-paid: <span class="total_cost" th:text="${totalCost}"></span>€</p>
+    <div class="center_div">
+        <div class="scrollable">
+            <h2>Service Package name</h2>
+            <span th:text="${orderToBuyAgain.getServicePackage().getName()}"></span>
 
-<div class="give_space"></div>
+            <div class="give_space"></div>
 
-<div class="center_div">
-    <div class="scrollable">
-        <h2>Service Package name</h2>
-        <span th:text="${servicePackageOrder.getServicePackage().getName()}"></span>
+            <h2>Optional Products</h2>
+            <div class="center_div" th:each="optionalProduct : ${orderToBuyAgain.getOptionalProducts()}">
+                <span th:text="${optionalProduct.getName()}"></span>
+            </div>
 
-        <div class="give_space"></div>
+            <div class="give_space"></div>
 
-        <h2>Optional Products</h2>
-        <div class="center_div" th:each="optionalProduct : ${servicePackageOrder.getOptionalProducts()}">
-            <span th:text="${optionalProduct.toString()}"></span>
-        </div>
+            <h2>Validity Period</h2>
+            <div class="center_div">
+                <span th:text="${orderToBuyAgain.getValidityPeriod()}"></span>
+            </div>
 
-        <div class="give_space"></div>
+            <div class="give_space"></div>
 
-        <h2>Validity Period</h2>
-        <div class="center_div">
-            <span th:text="${servicePackageOrder.getValidityPeriod().toString()}"></span>
-        </div>
+            <h2>Services</h2>
+            <div class="center_div" th:each="service : ${orderToBuyAgain.getServicePackage().getServices()}">
+                <span th:text="${service.toString()}"></span>
+            </div>
 
-        <div class="give_space"></div>
+            <div class="give_space"></div>
 
-        <h2>Services</h2>
-        <div class="center_div" th:each="service : ${servicePackageOrder.getServicePackage().getServices()}">
-            <span th:text="${service.toString()}"></span>
-        </div>
-
-        <div class="give_space"></div>
-
-        <h2>Start date of subscription</h2>
-        <div class="center_div">
-            <span th:text="${servicePackageOrder.getSubscriptionDateWrapper().getFormattedDate()}"></span>
+            <h2>Start date of subscription</h2>
+            <div class="center_div">
+                <span th:text="${dateFormatter.format(orderToBuyAgain.getStartDateOfSubscription())}"></span>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="authenticated_div" sec:authorize="isAuthenticated()">
+
+    <div class="give_space"></div>
+
     <p>For didactic purpose only, here we have two different buttons: the one on the left will result in a correct
         payment, while the one on the right will result in an incorrect payment</p>
     <div class="center_div">
@@ -287,14 +286,14 @@
             <tr>
                 <td>
                     <p>Correct payment</p>
-                    <p><a th:href="@{/buyServicePackageCorrect}">
+                    <p><a th:href="@{/buyServicePackageCorrectAgain}">
                         <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
                         </button>
                     </a></p>
                 </td>
                 <td>
                     <p>Wrong payment</p>
-                    <p><a th:href="@{/buyServicePackageInvalid}">
+                    <p><a th:href="@{/buyServicePackageInvalidAgain}">
                         <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
                         </button>
                     </a></p>
@@ -302,29 +301,99 @@
             </tr>
         </table>
     </div>
-
 </div>
 
-<div class="authenticated_div" sec:authorize="!isAuthenticated()">
+
+<div th:if="${!isTryingAgain}">
+    <h3>Here is a summary of your selected Service Package</h3>
+
+    <p class="total_cost">Total cost to be pre-paid: <span class="total_cost" th:text="${totalCost}"></span>€</p>
+
+    <div class="give_space"></div>
+
     <div class="center_div">
-        <table>
-            <tr>
-                <td>
-                    <p>Press this button to register before buying the Service Package</p>
-                    <p><a th:href="@{/registerBeforeBuyingServicePackage}">
-                        <button class="button" style="vertical-align:middle"><span class="button_span">Register</span>
-                        </button>
-                    </a></p>
-                </td>
-                <td>
-                    <p>Press this button to log in before buying the Service Package</p>
-                    <p><a th:href="@{/openConfirmationPageRegistered}">
-                        <button class="button" style="vertical-align:middle"><span class="button_span">Login</span>
-                        </button>
-                    </a></p>
-                </td>
-            </tr>
-        </table>
+        <div class="scrollable">
+            <h2>Service Package name</h2>
+            <span th:text="${servicePackageOrder.getServicePackage().getName()}"></span>
+
+            <div class="give_space"></div>
+
+            <h2>Optional Products</h2>
+            <div class="center_div" th:each="optionalProduct : ${servicePackageOrder.getOptionalProducts()}">
+                <span th:text="${optionalProduct.toString()}"></span>
+            </div>
+
+            <div class="give_space"></div>
+
+            <h2>Validity Period</h2>
+            <div class="center_div">
+                <span th:text="${servicePackageOrder.getValidityPeriod().toString()}"></span>
+            </div>
+
+            <div class="give_space"></div>
+
+            <h2>Services</h2>
+            <div class="center_div" th:each="service : ${servicePackageOrder.getServicePackage().getServices()}">
+                <span th:text="${service.toString()}"></span>
+            </div>
+
+            <div class="give_space"></div>
+
+            <h2>Start date of subscription</h2>
+            <div class="center_div">
+                <span th:text="${servicePackageOrder.getSubscriptionDateWrapper().getFormattedDate()}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="authenticated_div" sec:authorize="isAuthenticated()">
+        <p>For didactic purpose only, here we have two different buttons: the one on the left will result in a correct
+            payment, while the one on the right will result in an incorrect payment</p>
+        <div class="center_div">
+            <table>
+                <tr>
+                    <td>
+                        <p>Correct payment</p>
+                        <p><a th:href="@{/buyServicePackageCorrect}">
+                            <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
+                            </button>
+                        </a></p>
+                    </td>
+                    <td>
+                        <p>Wrong payment</p>
+                        <p><a th:href="@{/buyServicePackageInvalid}">
+                            <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
+                            </button>
+                        </a></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="authenticated_div" sec:authorize="!isAuthenticated()">
+        <div class="center_div">
+            <table>
+                <tr>
+                    <td>
+                        <p>Press this button to register before buying the Service Package</p>
+                        <p><a th:href="@{/registerBeforeBuyingServicePackage}">
+                            <button class="button" style="vertical-align:middle"><span
+                                    class="button_span">Register</span>
+                            </button>
+                        </a></p>
+                    </td>
+                    <td>
+                        <p>Press this button to log in before buying the Service Package</p>
+                        <p><a th:href="@{/openConfirmationPageRegistered}">
+                            <button class="button" style="vertical-align:middle"><span class="button_span">Login</span>
+                            </button>
+                        </a></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 
