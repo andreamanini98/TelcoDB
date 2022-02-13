@@ -18,8 +18,7 @@ public class OrderManagerService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    // TODO per resettare l'insolvent a false puoi fare un metodo a parte che prende solo i servizi di cui l'utente
-    //      non è riuscito a pagare
+    // TODO per resettare l'insolvent devi controllare che non abbia più pagamenti in sospeso
 
     @Transactional
     public void createOrder(String username, ServicePackageOrder spO, boolean isOrderValid) {

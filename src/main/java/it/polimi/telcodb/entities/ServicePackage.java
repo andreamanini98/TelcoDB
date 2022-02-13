@@ -13,9 +13,6 @@ public class ServicePackage {
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "servicePackages", fetch = FetchType.LAZY)
-    private List<User> users;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "ServicePackageJTService",
@@ -65,16 +62,6 @@ public class ServicePackage {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
 

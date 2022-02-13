@@ -249,6 +249,38 @@
     <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 </div>
 
+<div th:if="${areOrdersInvalid}">
+    <h3 class="h3_error">
+        <i class="fas fa-exclamation-triangle"></i>
+        You have been flagged as insolvent
+        <i class="fas fa-exclamation-triangle"></i>
+    </h3>
+    <p>There are some payments that are still incomplete. Please select one of the Service Packages below to try the
+        payment again.</p>
+    <p>The sum of all invalid orders still to be paid is: <span th:text="${totalCostToPay}"></span>€</p>
+
+    <form action="#" th:action="@{/tryServicePackagePaymentAgain}" method="post" id="SPForm_again">
+        <div class="center_div">
+            <div class="scrollable">
+                <div class="left_div" th:each="order : ${invalidOrders}">
+                    <label for="op_L_again">
+                        <input type="radio" name="Service Package" form="SPForm_again" id="op_L_again"
+                               class="custom_radio" th:value="${order.getId()}"/>
+                        <span>Order </span>
+                        <span th:text="${order.getId()}"></span>
+                        <span>: contains :: </span>
+                        <span th:text="${order.getServicePackage().getName()}"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" form="SPForm_again" class="button">Try again</button>
+    </form>
+
+    <div class="give_space"></div>
+    <hr>
+</div>
+
 <p>Below you can see the list of available Service Packages offered by TelcoDB. From this page you can select a<br>
     Service Package to see details about it, or you can proceed to the buy service page, where you can configure<br>
     your selected Service Package and buy it.</p>
@@ -275,7 +307,7 @@
         <td>
             <p>Press this button to show details about the selected Service Package</p>
             <p>
-                <button type="submit" name="action" value="showInfo" form="SPForm" class="button">Info</button>
+                <button type="submit" form="SPForm" class="button">Info</button>
             </p>
         </td>
         <td>

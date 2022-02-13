@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 @Controller
 public class UserHomepageController {
 
@@ -18,9 +20,10 @@ public class UserHomepageController {
 
 
     @RequestMapping("/openUserHomePageLogged")
-    public ModelAndView openUserHomePageLogged() {
+    public ModelAndView openUserHomePageLogged(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("userHomepage");
         addParametersToModelAndView(modelAndView);
+        addInvalidOrdersInfoToModelAndView(modelAndView, principal.getName());
         return modelAndView;
     }
 
@@ -34,9 +37,10 @@ public class UserHomepageController {
 
 
     @PostMapping("/showServicePackageInfo")
-    public ModelAndView showServicePackageInfo(@RequestParam(name = "Service Package") String servicePackageId) {
+    public ModelAndView showServicePackageInfo(Principal principal, @RequestParam(name = "Service Package") String servicePackageId) {
         ModelAndView modelAndView = new ModelAndView("userHomepage");
         addParametersToModelAndView(modelAndView);
+        if (principal != null) addInvalidOrdersInfoToModelAndView(modelAndView, principal.getName());
         addServicePackageInfoToModelAndView(modelAndView, servicePackageId);
         return modelAndView;
     }
@@ -50,6 +54,17 @@ public class UserHomepageController {
     private void addServicePackageInfoToModelAndView(ModelAndView modelAndView, String servicePackageId) {
         modelAndView.addObject("showInfo", true);
         modelAndView.addObject("servicePackageToShow", queryService.findServicePackageById(servicePackageId));
+    }
+
+
+    private void addInvalidOrdersInfoToModelAndView(ModelAndView modelAndView, String username) {
+        if (username != null) {
+            if (queryService.getIsInsolventByUsername(username)) {
+                modelAndView.addObject("areOrdersInvalid", true);
+                modelAndView.addObject("invalidOrders", queryService.getInvalidOrdersByUsername(username));
+                modelAndView.addObject("totalCostToPay", queryService.getSumOfAllInvalidOrdersCostByUsername(username));
+            }
+        }
     }
 
 

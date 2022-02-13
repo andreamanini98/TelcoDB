@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NamedQuery(name = "User.getIsInsolventByUsername", query = "SELECT u.isInsolvent FROM User u WHERE u.username = ?1")
 public class User {
 
     @Id
@@ -19,13 +20,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UserOrder> userOrders;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "UserJTServicePackage",
-            joinColumns = @JoinColumn(name = "userUsernameFK"),
-            inverseJoinColumns = @JoinColumn(name = "servicePackageIdFK"))
-    private List<ServicePackage> servicePackages;
 
     public User() {
     }
@@ -107,16 +101,6 @@ public class User {
 
     public void setUserOrders(List<UserOrder> orders) {
         this.userOrders = orders;
-    }
-
-
-    public List<ServicePackage> getServicePackages() {
-        return servicePackages;
-    }
-
-
-    public void setServicePackages(List<ServicePackage> servicePackages) {
-        this.servicePackages = servicePackages;
     }
 
 }
