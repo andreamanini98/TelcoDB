@@ -1,5 +1,6 @@
 package it.polimi.telcodb.config;
 
+import it.polimi.telcodb.security.AuthenticationSecurityHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private AuthenticationSecurityHandler authenticationSecurityHandler;
+
 
     @Bean
     public AuthenticationProvider authProvider() {
@@ -61,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .formLogin()
                 .loginPage("/login").permitAll()
+                .successHandler(authenticationSecurityHandler)
 
                 .and()
 
