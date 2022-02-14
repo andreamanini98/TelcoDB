@@ -213,6 +213,11 @@
             font-size: 18px;
             font-weight: 600;
         }
+
+        .logout_a {
+            color: white;
+            font-size: 20px;
+        }
     </style>
 
     <meta charset="UTF-8">
@@ -224,9 +229,9 @@
 
 <div class="authenticated_div" sec:authorize="isAuthenticated()">
     Authenticated as:
-    &emsp;
     <span sec:authentication="name"></span>
-    &emsp;
+    <br>
+    <span><a class="logout_a" th:href="@{/performLogout}">LOGOUT</a></span>
 </div>
 
 <h1>Confirmation Page</h1>
