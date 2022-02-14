@@ -5,6 +5,7 @@ import it.polimi.telcodb.services.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -33,23 +34,33 @@ public class OrderManagerController {
 
 
     @RequestMapping("/buyServicePackageCorrectAgain")
-    public ModelAndView buyServicePackageCorrectAgain() {
-        ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
-        return modelAndView;
+    public ModelAndView buyServicePackageCorrectAgain(Principal principal, @RequestParam String orderId) {
+        return addParametersToOrderCreatedPageTryingAgain(principal.getName(), orderId, true);
     }
 
 
     @RequestMapping("/buyServicePackageInvalidAgain")
-    public ModelAndView buyServicePackageInvalidAgain() {
-        ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
-        return modelAndView;
+    public ModelAndView buyServicePackageInvalidAgain(Principal principal, @RequestParam String orderId) {
+        return addParametersToOrderCreatedPageTryingAgain(principal.getName(), orderId, false);
     }
 
 
     private ModelAndView addParametersToOrderCreatedPage(String username, HttpSession session, boolean isOrderValid) {
         ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
-        orderManagerService.createOrder(username, sessionService.getServicePackageOrder(session), isOrderValid);
+        boolean isAlertCreated = orderManagerService.createOrderAndAlert(username, sessionService.getServicePackageOrder(session), isOrderValid);
+
+        modelAndView.addObject("isAlertCreated", isAlertCreated);
+        modelAndView.addObject("isOrderValid", isOrderValid);
         session.removeAttribute("spO");
+        return modelAndView;
+    }
+
+
+    private ModelAndView addParametersToOrderCreatedPageTryingAgain(String username, String orderId, boolean isOrderValid) {
+        ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
+        boolean isAlertCreated = orderManagerService.tryPaymentAgainAndAlert(username, orderId, isOrderValid);
+
+        modelAndView.addObject("isAlertCreated", isAlertCreated);
         modelAndView.addObject("isOrderValid", isOrderValid);
         return modelAndView;
     }

@@ -24,6 +24,14 @@ public class Alert {
     public Alert() {
     }
 
+    public Alert(BigDecimal amount, User user, String email, Date dateOfRejection, Date hourOfRejection) {
+        this.amount = amount;
+        this.user = user;
+        this.email = email;
+        this.dateOfRejection = dateOfRejection;
+        this.hourOfRejection = hourOfRejection;
+    }
+
 
     public Long getId() {
         return id;

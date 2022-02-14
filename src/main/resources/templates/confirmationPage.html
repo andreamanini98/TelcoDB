@@ -286,17 +286,15 @@
             <tr>
                 <td>
                     <p>Correct payment</p>
-                    <p><a th:href="@{/buyServicePackageCorrectAgain}">
-                        <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
-                        </button>
-                    </a></p>
+                    <form action="#" th:action="@{/buyServicePackageCorrectAgain}" method="post">
+                        <button type="submit" name="orderId" th:value="${orderToBuyAgain.getId()}">Buy</button>
+                    </form>
                 </td>
                 <td>
                     <p>Wrong payment</p>
-                    <p><a th:href="@{/buyServicePackageInvalidAgain}">
-                        <button class="button" style="vertical-align:middle"><span class="button_span">Buy</span>
-                        </button>
-                    </a></p>
+                    <form action="#" th:action="@{/buyServicePackageInvalidAgain}" method="post">
+                        <button type="submit" name="orderId" th:value="${orderToBuyAgain.getId()}">Buy</button>
+                    </form>
                 </td>
             </tr>
         </table>

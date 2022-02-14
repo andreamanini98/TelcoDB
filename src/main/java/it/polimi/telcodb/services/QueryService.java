@@ -59,6 +59,13 @@ public class QueryService {
 
 
     @Transactional
+    public long getNumberOfInvalidOrdersByUsername(String username) {
+        return entityManager.createNamedQuery("UserOrder.getNumberOfInvalidOrdersByUser", Long.class)
+                .setParameter(1, entityManager.find(User.class, username)).getSingleResult();
+    }
+
+
+    @Transactional
     public ServicePackage findServicePackageById(String id) {
         return entityManager.find(ServicePackage.class, Long.parseLong(id));
     }
