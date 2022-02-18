@@ -175,6 +175,20 @@
             outline: none;
             border: none;
         }
+
+        .rule_p {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .rule_div {
+            width: 40%;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            position: absolute;
+            transform: translate(-50%, 30px);
+            left: 50%;
+        }
     </style>
 
     <meta charset="UTF-8">
@@ -189,25 +203,35 @@
     <div class="shape"></div>
 </div>
 
-<form action="#" th:if="${isUserRegistered} == false" th:action="@{/registerUserBeforePurchase}" method="post">
+<div class="rule_div" th:if="${!isUserRegistered}">
+    <p class="rule_p">Your inserted data must respect the following rules:</p>
+    <p class="rule_p">Username must start with a letter and contain only letters and numbers</p>
+    <p class="rule_p">Password must contain at least 8 characters, including 1 letter and 1 number</p>
+    <p class="rule_p">Email must be in the form: xxx@xxx.com (only 2 characters after the dot are also accepted)</p>
+</div>
+
+<form action="#" th:if="${!isUserRegistered}" th:action="@{/registerUserBeforePurchase}" method="post">
     <h3>Register Here</h3>
 
     <label for="username">Username</label>
     <div class="input_div">
         <i class="far fa-address-book"></i>
-        <input type="text" placeholder="Username" name="username" id="username" th:required="required">
+        <input type="text" placeholder="Username" name="username" id="username" th:required="required"
+               pattern="[A-Za-z][A-Za-z0-9]*">
     </div>
 
     <label for="email">Email</label>
     <div class="input_div">
         <i class="far fa-envelope"></i>
-        <input type="text" placeholder="Email" name="email" id="email" th:required="required">
+        <input type="text" placeholder="Email" name="email" id="email" th:required="required"
+               pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}">
     </div>
 
     <label for="password">Password</label>
     <div class="input_div">
         <i class="fas fa-unlock-alt"></i>
-        <input type="password" placeholder="Password" name="password" id="password" th:required="required">
+        <input type="password" placeholder="Password" name="password" id="password" th:required="required"
+               pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}">
     </div>
 
     <input type="submit" value="Register">
