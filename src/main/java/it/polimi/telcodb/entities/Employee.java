@@ -14,6 +14,12 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(String username, String password, String email) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
 
     public String getUsername() {
         return username;

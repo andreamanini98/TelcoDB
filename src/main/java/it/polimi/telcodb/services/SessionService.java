@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +22,6 @@ public class SessionService {
     @Autowired
     private QueryService queryService;
 
-    // TODO pensa come rimuovere dalla sessione gli oggetti che ci metti dentro quando non serviranno più
-    //      tipo quando un nuovo ordine viene creato
 
     public void addServicePackageToServicePackageOrder(String servicePackageId, HttpSession session) {
         getServicePackageOrder(session).setServicePackage(queryService.findServicePackageById(servicePackageId));
@@ -42,7 +39,6 @@ public class SessionService {
     }
 
 
-    @Transactional
     public ServicePackageOrder addSelectedItemsToServicePackageOrder(HttpSession session, List<String> selectedOP, String validityPeriod, String subscriptionDate) {
         ServicePackageOrder spO = getServicePackageOrder(session);
         List<OptionalProduct> optionalProducts = new ArrayList<>();

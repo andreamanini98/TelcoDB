@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -44,34 +43,29 @@ public class QueryService {
     }
 
 
-    @Transactional
     public List<UserOrder> getInvalidOrdersByUsername(String username) {
         return entityManager.createNamedQuery("UserOrder.getInvalidOrdersByUser", UserOrder.class)
                 .setParameter(1, entityManager.find(User.class, username)).getResultList();
     }
 
 
-    @Transactional
     public BigDecimal getSumOfAllInvalidOrdersCostByUsername(String username) {
         return entityManager.createNamedQuery("UserOrder.getSumOfAllInvalidOrdersCostByUser", BigDecimal.class)
                 .setParameter(1, entityManager.find(User.class, username)).getSingleResult();
     }
 
 
-    @Transactional
     public long getNumberOfInvalidOrdersByUsername(String username) {
         return entityManager.createNamedQuery("UserOrder.getNumberOfInvalidOrdersByUser", Long.class)
                 .setParameter(1, entityManager.find(User.class, username)).getSingleResult();
     }
 
 
-    @Transactional
     public ServicePackage findServicePackageById(String id) {
         return entityManager.find(ServicePackage.class, Long.parseLong(id));
     }
 
 
-    @Transactional
     public UserOrder findUserOrderById(String id) {
         return entityManager.find(UserOrder.class, Long.parseLong(id));
     }

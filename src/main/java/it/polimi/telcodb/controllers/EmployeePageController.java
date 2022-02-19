@@ -33,11 +33,7 @@ public class EmployeePageController {
     }
 
 
-    //SOLO PER INSERIRE GLI EMPLOYEE NEL DATABASE, POI DOVRAI ELIMINARE:
-    // - QUESTO METODO
-    // - IL FORM DA INDEX.HTML
-    // - IL METODO RELATIVO NELL'EMPLOYEESERVICE
-    // - LA RICHIESTA RELATIVA NEL FILE SECURITYCONFIG
+    // Used to register Employees in the database. To enable this functionality, uncomment the lines in index.html file.
     @PostMapping("/registerEmployee")
     public String registerEmployee(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
         employeeService.saveEmployee(username, bCryptPasswordEncoder.encode(password), email);

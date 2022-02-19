@@ -20,10 +20,7 @@ public class EmployeeService {
 
     @Transactional
     public void saveEmployee(String username, String password, String email) {
-        Employee employee = new Employee();
-        employee.setUsername(username);
-        employee.setPassword(password);
-        employee.setEmail(email);
+        Employee employee = new Employee(username, password, email);
         entityManager.persist(employee);
     }
 
