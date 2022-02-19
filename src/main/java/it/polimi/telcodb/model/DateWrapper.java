@@ -33,7 +33,7 @@ public class DateWrapper {
     }
 
 
-    public String parseDate(String date) {
+    private String parseDate(String date) {
         StringBuilder parsedDate = new StringBuilder();
         String[] dateTokens = date.split("-");
         parsedDate.append(dateTokens[0]).append("/").append(dateTokens[1]).append("/").append(dateTokens[2]);
