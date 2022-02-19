@@ -2,19 +2,19 @@ package it.polimi.telcodb.security;
 
 import it.polimi.telcodb.entities.Employee;
 import it.polimi.telcodb.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 @Service
 public class MyUserDetailService implements UserDetailsService {
 
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
