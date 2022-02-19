@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,13 +34,11 @@ public class CreateSPPageController {
 
     @RequestMapping("/openCreateSPPage")
     public ModelAndView openCreateSPPage() {
-        ModelAndView modelAndView = new ModelAndView("createSPPage");
-        addParametersToModelAndView(modelAndView);
-        return modelAndView;
+        return addParametersToModelAndView();
     }
 
 
-    @RequestMapping("/createServicePackage")
+    @PostMapping("/createServicePackage")
     public ModelAndView printResultList(
             @RequestParam String name,
             @RequestParam(required = false) List<String> selectedOP,
@@ -49,9 +48,7 @@ public class CreateSPPageController {
             @RequestParam(required = false) String selectedFI,
             @RequestParam(required = false) String selectedMI
     ) {
-        ModelAndView modelAndView = new ModelAndView("createSPPage");
-        addParametersToModelAndView(modelAndView);
-
+        ModelAndView modelAndView = addParametersToModelAndView();
         try {
             checkServicesValidity(selectedFP, selectedMP, selectedFI, selectedMI);
         } catch (AllServicesAreNullException e) {
@@ -65,13 +62,15 @@ public class CreateSPPageController {
     }
 
 
-    private void addParametersToModelAndView(ModelAndView modelAndView) {
+    private ModelAndView addParametersToModelAndView() {
+        ModelAndView modelAndView = new ModelAndView("createSPPage");
         modelAndView.addObject("optionalProductsList", queryService.findAllOptionalProducts());
         modelAndView.addObject("validityPeriodsList", queryService.findAllValidityPeriods());
         modelAndView.addObject("fixedPhoneServicesList", queryService.findServiceByServiceType(ServiceType.FIXED_PHONE));
         modelAndView.addObject("mobilePhoneServicesList", queryService.findServiceByServiceType(ServiceType.MOBILE_PHONE));
         modelAndView.addObject("fixedInternetServicesList", queryService.findServiceByServiceType(ServiceType.FIXED_INTERNET));
         modelAndView.addObject("mobileInternetServicesList", queryService.findServiceByServiceType(ServiceType.MOBILE_INTERNET));
+        return modelAndView;
     }
 
 
@@ -95,8 +94,7 @@ public class CreateSPPageController {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ModelAndView handleMissingParams(MissingServletRequestParameterException e) {
-        ModelAndView modelAndView = new ModelAndView("createSPPage");
-        addParametersToModelAndView(modelAndView);
+        ModelAndView modelAndView = addParametersToModelAndView();
         modelAndView.addObject("errorMessage", e.getParameterName() + " parameter is missing!");
         return modelAndView;
     }
@@ -104,8 +102,7 @@ public class CreateSPPageController {
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ModelAndView handleMissingParams(SQLIntegrityConstraintViolationException e) {
-        ModelAndView modelAndView = new ModelAndView("createSPPage");
-        addParametersToModelAndView(modelAndView);
+        ModelAndView modelAndView = addParametersToModelAndView();
         modelAndView.addObject("errorMessage", exceptionFormatterService.formatSQLServicePackageAlreadyExists(e.getMessage()));
         return modelAndView;
     }

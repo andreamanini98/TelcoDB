@@ -38,7 +38,7 @@ public class EmployeePageController {
     // - IL FORM DA INDEX.HTML
     // - IL METODO RELATIVO NELL'EMPLOYEESERVICE
     // - LA RICHIESTA RELATIVA NEL FILE SECURITYCONFIG
-    @RequestMapping("/registerEmployee")
+    @PostMapping("/registerEmployee")
     public String registerEmployee(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
         employeeService.saveEmployee(username, bCryptPasswordEncoder.encode(password), email);
         return "index";

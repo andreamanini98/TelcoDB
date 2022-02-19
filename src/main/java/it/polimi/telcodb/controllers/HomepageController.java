@@ -32,7 +32,7 @@ public class HomepageController {
 
 
     @RequestMapping("/login")
-    public String loginPage() {
+    public String login() {
         return "login";
     }
 

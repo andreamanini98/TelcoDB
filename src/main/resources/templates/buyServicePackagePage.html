@@ -284,7 +284,7 @@
     <p class="p_error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
 </div>
 
-<div th:if="${isServicePackageSelected} == false">
+<div th:if="${!isServicePackageSelected}">
     <h3>Available Service Packages</h3>
     <form action="#" th:action="@{/selectServicePackageToBuy}" method="post" id="SPForm">
         <div class="center_div">
@@ -360,7 +360,8 @@
             <tr>
                 <td>
                     <p>Press the button to open the confirmation page</p>
-                    <button type="submit" value="associate" form="select_sp_params_form" class="submit_button">Confirm
+                    <button type="submit" value="associate" form="select_sp_params_form" class="submit_button">
+                        Confirm
                     </button>
                 </td>
                 <td>

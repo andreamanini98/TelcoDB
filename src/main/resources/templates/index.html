@@ -302,10 +302,11 @@
 
 <!--<p>INITIALIZE ONLY</p>-->
 <!--<p>Register new Employee here.</p>-->
+<!--<p>Employee username must only contain numbers-->
 <!--<div>-->
 <!--    <form action="#" th:action="@{/registerEmployee}" method="post">-->
 <!--        <label>-->
-<!--            <input type="text" th:placeholder="username" name="username">-->
+<!--            <input type="text" th:placeholder="username" name="username"  pattern="[0-9]+">-->
 <!--        </label><br>-->
 <!--        <label>-->
 <!--            <input type="password" th:placeholder="password" name="password">-->

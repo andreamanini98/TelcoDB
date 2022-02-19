@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @Controller
-public class OrderManagerController {
+public class OrderCreatedPageController {
 
     @Autowired
     private SessionService sessionService;
@@ -48,7 +48,6 @@ public class OrderManagerController {
     private ModelAndView addParametersToOrderCreatedPage(String username, HttpSession session, boolean isOrderValid) {
         ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
         boolean isAlertCreated = orderManagerService.createOrderAndAlert(username, sessionService.getServicePackageOrder(session), isOrderValid);
-
         modelAndView.addObject("isAlertCreated", isAlertCreated);
         modelAndView.addObject("isOrderValid", isOrderValid);
         session.removeAttribute("spO");
@@ -59,7 +58,6 @@ public class OrderManagerController {
     private ModelAndView addParametersToOrderCreatedPageTryingAgain(String username, String orderId, boolean isOrderValid) {
         ModelAndView modelAndView = new ModelAndView("orderCreatedPage");
         boolean isAlertCreated = orderManagerService.tryPaymentAgainAndAlert(username, orderId, isOrderValid);
-
         modelAndView.addObject("isAlertCreated", isAlertCreated);
         modelAndView.addObject("isOrderValid", isOrderValid);
         return modelAndView;

@@ -22,8 +22,7 @@ public class UserHomepageController {
 
     @RequestMapping("/openUserHomePageLogged")
     public ModelAndView openUserHomePageLogged(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("userHomepage");
-        addParametersToModelAndView(modelAndView);
+        ModelAndView modelAndView = addParametersToModelAndView();
         addInvalidOrdersInfoToModelAndView(modelAndView, principal.getName());
         return modelAndView;
     }
@@ -31,16 +30,13 @@ public class UserHomepageController {
 
     @RequestMapping("/openUserHomePage")
     public ModelAndView openUserHomePage() {
-        ModelAndView modelAndView = new ModelAndView("userHomepage");
-        addParametersToModelAndView(modelAndView);
-        return modelAndView;
+        return addParametersToModelAndView();
     }
 
 
     @PostMapping("/showServicePackageInfo")
     public ModelAndView showServicePackageInfo(Principal principal, @RequestParam(name = "Service Package") String servicePackageId) {
-        ModelAndView modelAndView = new ModelAndView("userHomepage");
-        addParametersToModelAndView(modelAndView);
+        ModelAndView modelAndView = addParametersToModelAndView();
         if (principal != null) addInvalidOrdersInfoToModelAndView(modelAndView, principal.getName());
         addServicePackageInfoToModelAndView(modelAndView, servicePackageId);
         return modelAndView;
@@ -57,8 +53,10 @@ public class UserHomepageController {
     }
 
 
-    private void addParametersToModelAndView(ModelAndView modelAndView) {
+    private ModelAndView addParametersToModelAndView() {
+        ModelAndView modelAndView = new ModelAndView("userHomepage");
         modelAndView.addObject("servicePackageList", queryService.findAllServicePackages());
+        return modelAndView;
     }
 
 
@@ -81,8 +79,7 @@ public class UserHomepageController {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ModelAndView handleMissingParams(MissingServletRequestParameterException e, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("userHomepage");
-        addParametersToModelAndView(modelAndView);
+        ModelAndView modelAndView = addParametersToModelAndView();
         if (principal != null) addInvalidOrdersInfoToModelAndView(modelAndView, principal.getName());
         modelAndView.addObject("errorMessage", e.getParameterName() + " parameter is missing!");
         return modelAndView;
