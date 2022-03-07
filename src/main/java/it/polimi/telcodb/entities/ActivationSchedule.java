@@ -14,7 +14,8 @@ public class ActivationSchedule {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @OneToOne(mappedBy = "activationSchedule", fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userOrderIdFK")
     private UserOrder userOrder;
 
     public ActivationSchedule() {

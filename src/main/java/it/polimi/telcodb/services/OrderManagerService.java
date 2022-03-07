@@ -26,20 +26,22 @@ public class OrderManagerService {
 
     @Transactional
     public boolean createOrderAndAlert(String username, ServicePackageOrder spO, boolean isValid) {
-        createOrder(username, spO, isValid);
+        UserOrder order = createOrder(username, spO, isValid);
+        createActivationSchedule(order);
         return createAlert(username);
     }
 
 
     @Transactional
     public boolean tryPaymentAgainAndAlert(String username, String orderId, boolean isOrderValid) {
-        tryPaymentAgain(username, orderId, isOrderValid);
+        UserOrder order = tryPaymentAgain(username, orderId, isOrderValid);
+        createActivationSchedule(order);
         return createAlert(username);
     }
 
 
     @Transactional
-    public void createOrder(String username, ServicePackageOrder spO, boolean isOrderValid) {
+    public UserOrder createOrder(String username, ServicePackageOrder spO, boolean isOrderValid) {
         User user = entityManager.find(User.class, username);
         UserOrder order = new UserOrder();
 
@@ -56,30 +58,31 @@ public class OrderManagerService {
         order.setStartDateOfSubscription(spO.getSubscriptionDateWrapper().getDate());
         order.setValid(isOrderValid);
 
-        if (isOrderValid) {
-            ActivationSchedule activationSchedule = new ActivationSchedule();
-            activationSchedule.setStartDate(spO.getSubscriptionDateWrapper().getDate());
-            activationSchedule.setEndDate(
-                    DateUtils.addMonths(
-                            spO.getSubscriptionDateWrapper().getDate(),
-                            spO.getValidityPeriod().getNumberOfMonths()
-                    )
-            );
-            order.setActivationSchedule(activationSchedule);
-        }
-
         entityManager.persist(order);
+        entityManager.flush();
+        return order;
     }
 
 
     @Transactional
-    public void tryPaymentAgain(String username, String orderId, boolean isOrderValid) {
+    public UserOrder tryPaymentAgain(String username, String orderId, boolean isOrderValid) {
         UserOrder order = entityManager.find(UserOrder.class, Long.parseLong(orderId));
         User user = entityManager.find(User.class, username);
 
         if (!isOrderValid) {
             user.setFailedPayments(user.getFailedPayments() + 1);
         } else {
+            order.setValid(true);
+            if (queryService.getNumberOfInvalidOrdersByUsername(username) == 0)
+                user.setInsolvent(false);
+        }
+        return order;
+    }
+
+
+    @Transactional
+    public void createActivationSchedule(UserOrder order) {
+        if (order.isValid()) {
             ActivationSchedule activationSchedule = new ActivationSchedule();
             activationSchedule.setStartDate(order.getStartDateOfSubscription());
             activationSchedule.setEndDate(
@@ -88,10 +91,8 @@ public class OrderManagerService {
                             order.getValidityPeriod().getNumberOfMonths()
                     )
             );
-            order.setActivationSchedule(activationSchedule);
-            order.setValid(true);
-            if (queryService.getNumberOfInvalidOrdersByUsername(username) == 0)
-                user.setInsolvent(false);
+            activationSchedule.setUserOrder(order);
+            entityManager.persist(activationSchedule);
         }
     }
 

@@ -43,8 +43,7 @@ public class UserOrder {
             inverseJoinColumns = @JoinColumn(name = "optionalProductIdFK"))
     private List<OptionalProduct> optionalProducts;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "activationScheduleIdFK")
+    @OneToOne(mappedBy = "userOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private ActivationSchedule activationSchedule;
 
     public UserOrder() {
