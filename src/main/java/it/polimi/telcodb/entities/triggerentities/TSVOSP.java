@@ -1,0 +1,35 @@
+package it.polimi.telcodb.entities.triggerentities;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "TotalSalesValueOfSP")
+public class TSVOSP {
+
+    @Id
+    private Long spId;
+    private BigDecimal totValueWithOP;
+    private BigDecimal totValueWithoutOP;
+
+    public TSVOSP() {
+    }
+
+
+    public Long getSpId() {
+        return spId;
+    }
+
+
+    public BigDecimal getTotValueWithOP() {
+        return totValueWithOP;
+    }
+
+
+    public BigDecimal getTotValueWithoutOP() {
+        return totValueWithoutOP;
+    }
+
+}
