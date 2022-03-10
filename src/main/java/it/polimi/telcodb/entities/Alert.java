@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+@NamedQuery(name = "Alert.findAll", query = "SELECT a FROM Alert a")
 public class Alert {
 
     @Id
@@ -92,4 +93,14 @@ public class Alert {
         this.user = user;
     }
 
+
+    @Override
+    public String toString() {
+        return "Alert " + id +
+                ": amount=" + amount +
+                ", email='" + email + '\'' +
+                ", dateOfRejection=" + dateOfRejection +
+                ", hourOfRejection=" + hourOfRejection +
+                ", user=" + user.getUsername();
+    }
 }

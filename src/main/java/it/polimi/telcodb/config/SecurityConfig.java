@@ -58,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/createValidityPeriod",
                         "/createOptionalProduct",
                         "/createServicePackage",
-                        "/openCreateSPPage"
+                        "/openCreateSPPage",
+                        "/openInspectionPage"
                 ).hasAuthority("ADMIN")
                 .anyRequest().authenticated()
 

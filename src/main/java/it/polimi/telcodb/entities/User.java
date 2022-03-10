@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 @NamedQuery(name = "User.getIsInsolventByUsername", query = "SELECT u.isInsolvent FROM User u WHERE u.username = ?1")
+@NamedQuery(name = "User.findAllInsolvents", query = "SELECT u FROM User u WHERE u.isInsolvent = 1")
 public class User {
 
     @Id

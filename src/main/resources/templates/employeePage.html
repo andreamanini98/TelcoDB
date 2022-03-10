@@ -400,10 +400,22 @@
 
 <hr>
 
-<p>Want to log-out?</p>
-<p><a th:href="@{/performLogout}">
-    <button class="button" style="vertical-align:middle"><span>Logout</span></button>
-</a></p>
+<table>
+    <tr>
+        <td>
+            <p>Click on this button to open the Inspection Page</p>
+            <p><a th:href="@{/openInspectionPage}">
+                <button class="button" style="vertical-align:middle"><span>Inspect</span></button>
+            </a></p>
+        </td>
+        <td>
+            <p>Want to log-out?</p>
+            <p><a th:href="@{/performLogout}">
+                <button class="button" style="vertical-align:middle"><span>Logout</span></button>
+            </a></p>
+        </td>
+    </tr>
+</table>
 
 </body>
 

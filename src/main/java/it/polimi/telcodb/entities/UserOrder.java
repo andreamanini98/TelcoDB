@@ -9,6 +9,7 @@ import java.util.List;
 @NamedQuery(name = "UserOrder.getInvalidOrdersByUser", query = "SELECT o FROM UserOrder o WHERE o.isValid = 0 and o.user = ?1")
 @NamedQuery(name = "UserOrder.getSumOfAllInvalidOrdersCostByUser", query = "SELECT SUM(o.totalValue) FROM UserOrder o WHERE o.isValid = 0 and o.user = ?1")
 @NamedQuery(name = "UserOrder.getNumberOfInvalidOrdersByUser", query = "SELECT COUNT(o.id) FROM UserOrder o WHERE o.isValid = 0 and o.user = ?1")
+@NamedQuery(name = "UserOrder.findAllInvalids", query = "SELECT o FROM UserOrder o WHERE o.isValid = 0")
 public class UserOrder {
 
     @Id
