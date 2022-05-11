@@ -45,8 +45,11 @@ public class OrderManagerService {
         User user = entityManager.find(User.class, username);
         UserOrder order = new UserOrder();
 
-        user.setInsolvent(!isOrderValid);
-        if (!isOrderValid) user.setFailedPayments(user.getFailedPayments() + 1);
+        if (!isOrderValid) {
+            user.setFailedPayments(user.getFailedPayments() + 1);
+            user.setFailsToAlert(user.getFailsToAlert() + 1);
+        }
+        if (user.getFailedPayments() > 0) user.setInsolvent(true);
 
         order.setUser(user);
         order.setDateOfCreation(new Date());
@@ -70,11 +73,11 @@ public class OrderManagerService {
         User user = entityManager.find(User.class, username);
 
         if (!isOrderValid) {
-            user.setFailedPayments(user.getFailedPayments() + 1);
+            user.setFailsToAlert(user.getFailsToAlert() + 1);
         } else {
             order.setValid(true);
-            if (queryService.getNumberOfInvalidOrdersByUsername(username) == 0)
-                user.setInsolvent(false);
+            user.setFailedPayments(user.getFailedPayments() - 1);
+            if (user.getFailedPayments() == 0) user.setInsolvent(false);
         }
         return order;
     }
@@ -102,13 +105,13 @@ public class OrderManagerService {
         boolean isAlertCreated = false;
         User user = entityManager.find(User.class, username);
 
-        if (user.getFailedPayments() == 3) {
+        if (user.getFailsToAlert() == 3) {
             isAlertCreated = true;
             Alert alert = new Alert(
                     queryService.getSumOfAllInvalidOrdersCostByUsername(user.getUsername()),
                     user, user.getEmail(), new Date(), new Date()
             );
-            user.setFailedPayments(0);
+            user.setFailsToAlert(0);
             entityManager.persist(alert);
         }
         return isAlertCreated;

@@ -15,6 +15,7 @@ public class User {
     @Column(columnDefinition = "TINYINT", length = 1)
     private boolean isInsolvent;
     private int failedPayments;
+    private int failsToAlert;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Alert> alerts;
@@ -31,6 +32,7 @@ public class User {
         this.password = password;
         this.isInsolvent = false;
         this.failedPayments = 0;
+        this.failsToAlert = 0;
     }
 
 
@@ -76,6 +78,16 @@ public class User {
 
     public void setFailedPayments(int failedPayments) {
         this.failedPayments = failedPayments;
+    }
+
+
+    public int getFailsToAlert() {
+        return failsToAlert;
+    }
+
+
+    public void setFailsToAlert(int failsToAlert) {
+        this.failsToAlert = failsToAlert;
     }
 
 
