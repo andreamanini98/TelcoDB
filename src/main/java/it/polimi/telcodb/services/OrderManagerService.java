@@ -79,6 +79,8 @@ public class OrderManagerService {
             user.setFailedPayments(user.getFailedPayments() - 1);
             if (user.getFailedPayments() == 0) user.setInsolvent(false);
         }
+
+        entityManager.flush();
         return order;
     }
 
