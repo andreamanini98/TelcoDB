@@ -26,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationProvider authProvider() {
+        // An Authentication provider processes authentication requests.
+        // A DaoAuthenticationProvider can retrieve information about a user from an UserDetailService.
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(new BCryptPasswordEncoder());
@@ -35,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // Since we don't have cross-site requests, we can for simplicity disable the CSRF authentication mechanism.
+        // We can override this method since we extended the (deprecated) WebSecurityConfigurerAdapter.
         http.csrf().disable()
                 .authorizeRequests().antMatchers(
                         "/",

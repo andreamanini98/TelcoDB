@@ -16,6 +16,8 @@ public class AuthenticationSecurityHandler extends SavedRequestAwareAuthenticati
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        // SavedRequestAwareAuthenticationSuccessHandler makes use of the saved request stored in the session.
+        // After a successful login, users will be redirected to the URL saved in the original request.
         String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         HttpSession session = request.getSession();
 
